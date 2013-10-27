@@ -1,6 +1,3 @@
-Nativ' Games Engine
-===================
-
 #Presentation
 
 NGEngine by Nativ' Games is a C++ 2D/3D Game Engine, with the minimum of dependencies:
