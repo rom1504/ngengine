@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 
 	SDL_SetVideoMode(800, 600, 32, SDL_OPENGL | SDL_DOUBLEBUF);
 
-	SDL_WM_SetCaption("NGEngine - 05_3D", NULL);
+	SDL_WM_SetCaption("NGEngine - 06_CameraQuat", NULL);
   
   NGE_SDL_Event_Init(&event);
 

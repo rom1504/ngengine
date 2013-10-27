@@ -15,7 +15,12 @@ nge::video::D3::entity::Basic *create3DEntity()
     1, -1, 1,
     1,-1,-1,
     1,1,-1,
-    1,1,1
+    1,1,1,
+    
+    -10., -10, -1., 
+    -10., 10., -1.,
+    10., 10., -1.,
+    10., -10., -1. 
   };
 
   static Uint8 colors[] = {
@@ -27,11 +32,16 @@ nge::video::D3::entity::Basic *create3DEntity()
     0, 255, 0, 255,
     0, 255, 0, 255,
     0, 255, 0, 255,
-    0, 255, 0, 255
+    0, 255, 0, 255,
+
+    0, 0, 255, 255,
+    0, 0, 255, 255,
+    0, 0, 255, 255,
+    0, 0, 255, 255
     
   };
   
-  entity = new nge::video::D3::entity::Basic(4, 2, GL_QUADS);
+  entity = new nge::video::D3::entity::Basic(4, 3, GL_QUADS);
 
   entity->setVertexBuf(vertices, false);  // (x, y) couples
   entity->setColorBuf(colors, false);
@@ -58,7 +68,7 @@ int main(int argc, char **argv)
 
   // Création de la subscene
 
-  Sint32 vertices[] = {
+  /*Sint32 vertices[] = {
     0, 0,
     128, 0,
     128, 128,
@@ -77,7 +87,7 @@ int main(int argc, char **argv)
     1., 1.,
     1., 0.,
     0., 0.
-  };
+  };*/
 
   SDL_ShowCursor(0);
   SDL_WM_GrabInput(SDL_GRAB_ON);
@@ -93,14 +103,14 @@ int main(int argc, char **argv)
   
   nge::entity::Basic e1(4, 1, GL_QUADS);
 
-  e1.setVertexBuf(vertices, false);  // (x, y) couples
+  /*e1.setVertexBuf(vertices, false);  // (x, y) couples
   e1.setColorBuf(colors, false);
   e1.setTexture(tex1, false);
-  e1.setTexCoords(texCoords, false);
+  e1.setTexCoords(texCoords, false);*/
  
   entity = create3DEntity();
 
-  subscene->add(&e1);
+  /*subscene->add(&e1);*/
   subscene->add(entity);
 
   nge::scene::Scene scene;

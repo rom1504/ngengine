@@ -12,7 +12,7 @@ The examples use the following libraries:
 
 Currently, OpenGL 2.1 is used, without shader support.
 
-An update to SDL 2.0 should be done by the future (and to OpenGL 3.1 or 3.2).
+An update to SDL 2.0 should be done in the future (and to OpenGL 3.1 or 3.2).
 
 #Library Structure
 
@@ -52,7 +52,7 @@ An update to SDL 2.0 should be done by the future (and to OpenGL 3.1 or 3.2).
 #Warnings
 
 - Lots of comments are in French, others are in English. They will definitly be re-written in English soon.
-- The 06_CameraQuat presents a fix: the rotation should be around the left\_axis and the normal\_axis, and when you do rounds with the camera, she turns over the target\_axis too... TO FIX
+- The 06_CameraQuat presents a bug: the rotation should be around the left\_axis and the normal\_axis, and when you do rounds with the camera, it turns over the target\_axis too... TO FIX
 
 #Licence
 
