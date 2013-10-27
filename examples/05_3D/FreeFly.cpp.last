@@ -1,0 +1,75 @@
+#include <05_3D/FreeFly.h>
+#include <glm/gtc/quaternion.hpp>
+
+FreeFly::FreeFly() : _targetRel(1., 0., 0)
+{
+  
+}
+
+FreeFly::~FreeFly()
+{
+  
+}
+
+void FreeFly::forward(double l)
+{
+  glm::vec3 t = _targetRel;
+  t *= l;
+
+  _position += t;
+  _target = _position + _targetRel;
+}
+
+void FreeFly::left(double l)
+{
+  glm::vec3 left = glm::cross(_targetRel, _normal);
+
+  left = glm::normalize(left);
+
+  left *= l;
+  _position += left;
+  _target = _position + _targetRel;
+}
+
+void FreeFly::normal(double l)
+{
+  glm::vec3 t = _normal;
+  t *= l;
+
+  _position += t;
+  _target = _position + _targetRel;
+}
+
+void FreeFly::rotateForward(double angle)
+{
+ // _normal = glm::rotate(_normal, angle, _targetRel);
+}
+#include <stdio.h>
+void FreeFly::rotateLeft(double angle)
+{
+  glm::vec3 left = glm::cross(_normal, _targetRel);
+  glm::vec3 left2 = left;
+
+  left = glm::normalize(left);
+
+  //_targetRel = glm::quat(glm::vec3(0., 0., angle)) * _targetRel;
+  left *= angle;
+  _targetRel = glm::quat(left) * _targetRel;
+  _targetRel = glm::normalize(_targetRel);
+
+  _target = _position + _targetRel;
+
+  _normal = glm::cross(_targetRel, left2);
+}
+
+void FreeFly::rotateNormal(double angle)
+{
+  _normal = glm::normalize(_normal);
+  //_targetRel = glm::quat(glm::vec3(0., 0., angle)) * _targetRel;
+  glm::vec3 rot = _normal;
+  rot *= angle;
+  _targetRel = glm::quat(rot) * _targetRel;
+  _targetRel = glm::normalize(_targetRel);
+  _target = _position + _targetRel;
+}
+
