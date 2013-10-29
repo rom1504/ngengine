@@ -1,7 +1,8 @@
 #include <ngengine/video/D2/entity/entity.h>
 
 using namespace nge;
-using namespace nge::entity;
+using namespace nge::video;
+using namespace nge::video::D2;
 
 Entity::~Entity()
 {

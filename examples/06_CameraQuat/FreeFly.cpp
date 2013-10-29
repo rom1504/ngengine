@@ -25,7 +25,7 @@ void FreeFly::left(double l)
 {
   glm::vec3 left = glm::cross(_targetRel, _normal);
 
-  left = glm::normalize(left);
+  //left = glm::normalize(left);
 
   left *= l;
   _position += left;
@@ -62,6 +62,7 @@ void FreeFly::rotateLeft(double angle)
 void FreeFly::rotateNormal(double angle)
 {
   glm::quat q2 = glm::angleAxis((float) -angle, _normalRel);
+  q2 = glm::normalize(q2);
   _quat = _quat * q2; //glm::cross(_quat, q2);
   
   this->updateVectRel();

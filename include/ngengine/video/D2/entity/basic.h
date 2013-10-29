@@ -6,7 +6,9 @@
 #include <ngengine/video/texture/texture.h>
 
 namespace nge {
-  namespace entity {
+  namespace video {
+    namespace D2 {
+      namespace entity {
 
   class Basic : public Entity {
     public:
@@ -41,6 +43,8 @@ namespace nge {
       GLenum _renderType;
   };
 
+      }
+    }
   }
 }
 

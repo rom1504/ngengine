@@ -3,7 +3,6 @@
 using namespace nge;
 using namespace nge::video;
 using namespace nge::video::D3;
-using namespace nge::video::D3::entity;
 
 Entity::Entity() : _rotation(0., 0., 0., 1.)
 {

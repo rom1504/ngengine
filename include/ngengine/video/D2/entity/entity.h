@@ -5,7 +5,8 @@
 #include <glm/glm.hpp>
 
 namespace nge {
-  namespace entity {
+  namespace video {
+    namespace D2 {
 
   class Entity {
     public:
@@ -23,6 +24,7 @@ namespace nge {
       glm::vec2 _pos;
   };
 
+    }
   }
 }
 

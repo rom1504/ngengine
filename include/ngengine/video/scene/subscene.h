@@ -16,8 +16,8 @@ namespace nge {
       SubScene(Uint32 screenHeight, Uint32 width, Uint32 height, Uint32 x, Uint32 y);
       ~SubScene();
 
-      void add(entity::Entity *entity);
-      void add(video::D3::entity::Entity *entity);
+      void add(nge::video::D2::Entity *entity);
+      void add(nge::video::D3::Entity *entity);
       void draw();
 
       void setScreenHeight(Uint32 screenHeight);
@@ -32,11 +32,12 @@ namespace nge {
       Uint32 getX() const;
       Uint32 getY() const;
       
-      std::vector<entity::Entity *> *getEntities();
+      std::vector<nge::video::D2::Entity *> *getEntities2D();
+      std::vector<nge::video::D3::Entity *> *getEntities3D();
 
       void setCamera3D(nge::video::D3::Camera *cam);
 
-      camera::Camera *getCamera2D();
+      nge::video::D2::Camera *getCamera2D();
       nge::video::D3::Camera *getCamera3D();
 
     private:
@@ -46,10 +47,10 @@ namespace nge {
       Uint32 _height;
       Uint32 _x;
       Uint32 _y;
-      std::vector<entity::Entity *> _entities2D;
-      std::vector<video::D3::entity::Entity *> _entities3D;
+      std::vector<nge::video::D2::Entity *> _entities2D;
+      std::vector<nge::video::D3::Entity *> _entities3D;
 
-      camera::Camera _cam2D;
+      nge::video::D2::Camera _cam2D;
       nge::video::D3::Camera *_cam3D;
   };
 

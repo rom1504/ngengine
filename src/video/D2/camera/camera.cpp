@@ -1,7 +1,8 @@
 #include <ngengine/video/D2/camera/camera.h>
 
 using namespace nge;
-using namespace nge::camera;
+using namespace nge::video;
+using namespace nge::video::D2;
 
 Camera::Camera()
 {

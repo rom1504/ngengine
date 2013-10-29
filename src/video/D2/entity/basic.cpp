@@ -2,7 +2,9 @@
 #include <stdlib.h>
 
 using namespace nge;
-using namespace nge::entity;
+using namespace nge::video;
+using namespace nge::video::D2;
+using namespace nge::video::D2::entity;
 
 Basic::Basic(Uint32 nbVertices, Uint32 nbForms, GLenum renderType)
 {

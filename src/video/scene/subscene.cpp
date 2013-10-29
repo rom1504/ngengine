@@ -26,12 +26,12 @@ SubScene::~SubScene()
   
 }
 
-void SubScene::add(entity::Entity *entity)
+void SubScene::add(nge::video::D2::Entity *entity)
 {
   _entities2D.push_back(entity);
 }
 
-void SubScene::add(video::D3::entity::Entity *entity)
+void SubScene::add(nge::video::D3::Entity *entity)
 {
   _entities3D.push_back(entity);
 }
@@ -211,9 +211,14 @@ Uint32 SubScene::getY() const
   return _y;
 }
 
-std::vector<entity::Entity *> *SubScene::getEntities()
+std::vector<nge::video::D2::Entity *> *SubScene::getEntities2D()
 {
   return &_entities2D;
+}
+
+std::vector<nge::video::D3::Entity *> *SubScene::getEntities3D()
+{
+  return &_entities3D;
 }
 
 void SubScene::setCamera3D(nge::video::D3::Camera *cam)
@@ -221,7 +226,7 @@ void SubScene::setCamera3D(nge::video::D3::Camera *cam)
   _cam3D = cam;
 }
 
-camera::Camera *SubScene::getCamera2D()
+nge::video::D2::Camera *SubScene::getCamera2D()
 {
   return &_cam2D;
 }

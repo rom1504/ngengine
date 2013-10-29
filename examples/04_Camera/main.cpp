@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv)
 {
-  nge::camera::Camera *cam;
+  nge::video::D2::Camera *cam;
   SDL_Init(SDL_INIT_VIDEO);
 	SDL_SetVideoMode(800, 600, 32, SDL_OPENGL | SDL_DOUBLEBUF);
 	SDL_WM_SetCaption("NGEngine - 04Camera", NULL);
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
   nge::texture::Texture *tex1 = NGE_SDL_Texture_Load("nge.png");
   nge::texture::Texture *tex2 = NGE_SDL_Texture_Load("nge_transp.png");
 
-  nge::entity::Basic e1(4, 1, GL_QUADS);
+  nge::video::D2::entity::Basic e1(4, 1, GL_QUADS);
 
   e1.setVertexBuf(vertices, false);  // (x, y) couples
   e1.setColorBuf(colors, false);

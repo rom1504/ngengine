@@ -7,7 +7,6 @@
 namespace nge {
   namespace video {
     namespace D3 {
-      namespace entity {
 
   class Entity {
     public:
@@ -27,8 +26,7 @@ namespace nge {
       glm::vec3 _pos;
       glm::vec4 _rotation; // angle et vecteur de rotation
   };
-    
-      }
+   
     }
   }
 }

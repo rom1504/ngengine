@@ -26,7 +26,7 @@ int main(int argc, char **argv)
   };
 
   nge::scene::SubScene subscene(600, 800, 600, 0, 0);
-  nge::entity::Basic e1(3, 1, GL_TRIANGLES);
+  nge::video::D2::entity::Basic e1(3, 1, GL_TRIANGLES);
 
   e1.setVertexBuf(vertices, false);  // (x, y) couples
   e1.setColorBuf(colors, false); 

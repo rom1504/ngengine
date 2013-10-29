@@ -4,7 +4,7 @@
 #include <ngengine/collision/D3/AbstractDescriptor.h>
 #include <ngengine/video/video.h>
 #include <ngengine/utils/types.h>
-
+/*
 namespace nge {
   namespace collision {
     namespace D3 {
@@ -34,7 +34,7 @@ namespace nge {
     protected:
 
       glm::vec3 _points[8];
-      glm::vec2 _map[3]; // xmin xmax ymin ymax zmin zmax
+      glm::vec2 _map[3]; */// xmin xmax ymin ymax zmin zmax
       /*
         _points[0] = xmin ymin zmin
         _points[1] = xmax ymin zmin
@@ -45,7 +45,7 @@ namespace nge {
         _points[6] = xmin xmin zmax
         _points[7] = xmax xmax zmax
         
-      */
+      *//*
   };
 
   class BoundingBoxEntity : public nge::video::D3::entity::Basic {
@@ -65,5 +65,5 @@ namespace nge {
     }
   }
 }
-
+*/
 #endif

@@ -6,7 +6,8 @@
 #include <glm/glm.hpp>
 
 namespace nge {
-  namespace camera {
+  namespace video {
+    namespace D2 {
 
   class Camera {
 			public:
@@ -70,6 +71,7 @@ namespace nge {
 				Sint32 _x, _y, _width, _height;
 		};
 
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 #include <ngengine/collision/D3/BoundingBox.h>
 #include <string.h>
-
+/*
 using namespace nge;
 using namespace nge::collision;
 using namespace nge::collision::D3;
@@ -130,4 +130,4 @@ void BoundingBoxEntity::update()
   copie_point(6)
 
 }
-
+*/
