@@ -110,11 +110,12 @@ void SubScene::draw()
     }
   }
 
-  glEnable(GL_TEXTURE_2D);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
   glClear(GL_DEPTH_BUFFER_BIT);
+
+  glDisable(GL_DEPTH_TEST);
 
   gluOrtho2D((GLdouble) _cam2D.getX() - 1, 
 		  	     (GLdouble)(_cam2D.getWidth() + _cam2D.getX() - 1), 
@@ -129,6 +130,8 @@ void SubScene::draw()
   for(i = 0; i < n; i++) {
     _entities2D[i]->draw();
   }
+
+  glEnable(GL_DEPTH_TEST);
 }
 
 /*void SubScene::draw()

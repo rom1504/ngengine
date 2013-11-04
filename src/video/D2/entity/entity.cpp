@@ -6,6 +6,7 @@ using namespace nge::video::D2;
 
 Entity::~Entity()
 {
+  _angle = 0.;
 }
 
 void Entity::draw()
@@ -23,4 +24,8 @@ glm::vec2 *Entity::getPosition()
   return &_pos;
 }
 
+double *Entity::getAngle()
+{
+  return &_angle;
+}
 

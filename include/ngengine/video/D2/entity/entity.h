@@ -19,9 +19,11 @@ namespace nge {
       void drawWithOffset(Sint32 x, Sint32 y);
 
       glm::vec2 *getPosition();
+      double *getAngle();
 
-    private:
+    protected:
       glm::vec2 _pos;
+      double _angle;
   };
 
     }

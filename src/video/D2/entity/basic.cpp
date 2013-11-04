@@ -68,6 +68,12 @@ void Basic::setTexture(texture::Texture *tex, bool toFree)
   _freeTex = toFree;
 }
 
+
+double *Basic::getTexCoords()
+{
+  return _texCoords;
+}
+
 void Basic::drawAtPosition(Sint32 x, Sint32 y)
 {
   Uint32 i, j, k, l;
@@ -86,6 +92,11 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
       glDisable(GL_TEXTURE_2D);
     else;
   }
+
+  glPushMatrix();
+
+  glTranslated((double) x, (double) y, 0.);
+  glRotated(_angle, 0., 0., 1.);
 
   glBegin(_renderType);
 
@@ -109,8 +120,8 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
 
       setGLColor();
 
-      glVertex2i(_verticesBuf[k] + x, 
-                 _verticesBuf[k + 1] + y);
+      glVertex2i(_verticesBuf[k], 
+                 _verticesBuf[k + 1]);
 
       k += 2;
       l += 4;
@@ -118,5 +129,7 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
   }
 
   glEnd();
+
+  glPopMatrix();
 }
 

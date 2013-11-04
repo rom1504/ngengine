@@ -35,7 +35,8 @@ Texture *NGE_SDL_Texture_Load(const char *path)
 			buf = new PixelBuffer(surface->format->BytesPerPixel, surface->w, surface->h);
 			p = (Uint8 *) surface->pixels;
 			
-			for(i = 0; i < surface->h; i++) {
+			//for(i = 0; i < surface->h; i++) {
+      for(i = surface->h - 1; i >= 0; i--) {
 				q = buf->getPixelAddr(0, i + (buf->getRealHeight() - buf->getHeight()));
 				
 				for(j = 0; j < surface->w; j++) {
@@ -55,7 +56,8 @@ Texture *NGE_SDL_Texture_Load(const char *path)
 					else;
 				}
 				
-				p += surface->format->BytesPerPixel * surface->w;
+				//p += surface->format->BytesPerPixel * surface->w;
+        p += surface->format->BytesPerPixel * surface->w;
 			}
 			
 			tex = new Texture();

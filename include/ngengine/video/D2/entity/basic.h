@@ -22,6 +22,8 @@ namespace nge {
       void setTexCoords(double *p, bool toFree);    // (x, y) couples
       void setTexture(texture::Texture *tex, bool toFree);
 
+      double *getTexCoords();
+
       void drawAtPosition(Sint32 x, Sint32 y);
 
     private:
