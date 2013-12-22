@@ -36,6 +36,28 @@ void SubScene::add(nge::video::D3::Entity *entity)
   _entities3D.push_back(entity);
 }
 
+void SubScene::remove(nge::video::D2::Entity *entity)
+{
+  for(std::vector<nge::video::D2::Entity *>::iterator it = _entities2D.begin(); it < _entities2D.end(); it++) {
+    if(*it == entity) {
+      _entities2D.erase(it);
+      it --;
+    }
+    else;
+  }
+}
+
+void SubScene::remove(nge::video::D3::Entity *entity)
+{
+  for(std::vector<nge::video::D3::Entity *>::iterator it = _entities3D.begin(); it < _entities3D.end(); it++) {
+    if(*it == entity) {
+      _entities3D.erase(it);
+      it --;
+    }
+    else;
+  }
+}
+
 void SubScene::draw()
 {
   int i, n;

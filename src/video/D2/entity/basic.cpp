@@ -68,10 +68,24 @@ void Basic::setTexture(texture::Texture *tex, bool toFree)
   _freeTex = toFree;
 }
 
+Sint32 *Basic::getVerticesBuf()
+{
+  return _verticesBuf;
+}
 
+Uint8 *Basic::getColorsBuf()
+{
+  return _colorsBuf;
+}
+    
 double *Basic::getTexCoords()
 {
   return _texCoords;
+}
+
+texture::Texture *Basic::getTexture()
+{
+  return _tex;
 }
 
 void Basic::drawAtPosition(Sint32 x, Sint32 y)

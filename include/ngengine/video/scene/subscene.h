@@ -18,6 +18,8 @@ namespace nge {
 
       void add(nge::video::D2::Entity *entity);
       void add(nge::video::D3::Entity *entity);
+      void remove(nge::video::D2::Entity *entity);
+      void remove(nge::video::D3::Entity *entity);
       void draw();
 
       void setScreenHeight(Uint32 screenHeight);

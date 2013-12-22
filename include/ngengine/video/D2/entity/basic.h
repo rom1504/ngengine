@@ -22,7 +22,10 @@ namespace nge {
       void setTexCoords(double *p, bool toFree);    // (x, y) couples
       void setTexture(texture::Texture *tex, bool toFree);
 
+      Sint32 *getVerticesBuf();
+      Uint8  *getColorsBuf();
       double *getTexCoords();
+      texture::Texture *getTexture();
 
       void drawAtPosition(Sint32 x, Sint32 y);
 
