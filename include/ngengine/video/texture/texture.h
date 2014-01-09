@@ -12,6 +12,7 @@ namespace nge {
     public:
 
       Texture();
+      Texture(GLuint texid);
       ~Texture();
 
       void setPixelBuffer(PixelBuffer *pxBuf); // appelle updateInGC
@@ -20,6 +21,8 @@ namespace nge {
       void bind(); // bindTexture for OpenGL
 
       PixelBuffer *getPxBuf() const;
+
+      void set_id(GLuint texid);
 
     private:
 

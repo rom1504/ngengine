@@ -10,9 +10,17 @@ Texture::Texture()
 	glGenTextures(1, &_texid);
 }
 
+Texture::Texture(GLuint texid)
+{
+  _pxBuf = nullptr;
+  _texid = texid;
+}
+
 Texture::~Texture()
 {
-  glDeleteTextures(1, &_texid);
+  if(_texid > 0)
+    glDeleteTextures(1, &_texid);
+  else;
 }
 
 void Texture::setPixelBuffer(PixelBuffer *pxBuf)
@@ -63,5 +71,11 @@ void Texture::bind()
 PixelBuffer *Texture::getPxBuf() const
 {
   return _pxBuf;
+}
+
+
+void Texture::set_id(GLuint texid)
+{
+  _texid = texid;
 }
 

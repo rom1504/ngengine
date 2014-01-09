@@ -6,6 +6,7 @@
 // Entity
 #include <ngengine/video/D2/entity/entity.h>
 #include <ngengine/video/D2/entity/basic.h>
+#include <ngengine/video/D2/entity/text.h>
 
 #include <ngengine/video/D3/entity/entity.h>
 #include <ngengine/video/D3/entity/basic.h>

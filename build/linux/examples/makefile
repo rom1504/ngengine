@@ -5,4 +5,5 @@ all:
 	cd 04_Camera && $(MAKE)
 	cd 05_3D && $(MAKE)
 	cd 06_CameraQuat && $(MAKE)
+	cd 07_Text && $(MAKE)
 

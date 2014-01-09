@@ -12,8 +12,8 @@ SubScene::SubScene(Uint32 screenHeight, Uint32 width, Uint32 height, Uint32 x = 
   _x = x;
   _y = y;
 
-  _cam2D.setX(-100);
-	_cam2D.setY(-100);
+  _cam2D.setX(0);
+	_cam2D.setY(0);
 	_cam2D.setWidth(width);
 	_cam2D.setHeight(height);
   _cam2D.setFrameSize(width, height);
