@@ -7,6 +7,7 @@ using namespace nge::video::D2;
 Entity::~Entity()
 {
   _angle = 0.;
+  _shader = nullptr;
 }
 
 void Entity::draw()

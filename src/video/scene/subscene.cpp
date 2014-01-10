@@ -71,17 +71,24 @@ void SubScene::draw()
   glDisable(GL_TEXTURE_2D);
 
   if(_entities3D.size() > 0) {
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
+/*    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();*/
 
-    gluPerspective(_cam3D->getFovy(),
+    _projection = glm::perspective(
+      _cam3D->getFovy(),
+      _cam3D->getAspect(), 
+      _cam3D->getZNear(), 
+      _cam3D->getZFar()
+    );
+
+/*    gluPerspective(_cam3D->getFovy(),
                    _cam3D->getAspect(), 
                    _cam3D->getZNear(), 
                    _cam3D->getZFar());
     
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
+*/
     if(_cam3D) {
  
       glm::vec3 *pos, *target, *normal;
@@ -90,7 +97,12 @@ void SubScene::draw()
       target = _cam3D->getTarget();
       normal = _cam3D->getNormal();
 
-      gluLookAt((*pos)[0], 
+      _modelview = glm::lookAt(
+        glm::vec3((*pos)[0], (*pos)[1], (*pos)[2]),
+        glm::vec3((*target)[0], (*target)[1], (*target)[2]),
+        glm::vec3((*normal)[0], (*normal)[1], (*normal)[2])
+      );
+      /*gluLookAt((*pos)[0], 
                 (*pos)[1],
                 (*pos)[2],
                 (*target)[0], 
@@ -98,7 +110,7 @@ void SubScene::draw()
                 (*target)[2],
                 (*normal)[0], 
                 (*normal)[1],
-                (*normal)[2]);
+                (*normal)[2]);*/
     }
     else
       gluLookAt(3,4,2,0,0,0,0,0,1);
@@ -132,20 +144,25 @@ void SubScene::draw()
     }
   }
 
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
+  /*glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();*/
+  _projection = glm::mat4();
 
   glClear(GL_DEPTH_BUFFER_BIT);
 
   glDisable(GL_DEPTH_TEST);
 
-  gluOrtho2D((GLdouble) _cam2D.getX() - 1, 
+  /*gluOrtho2D((GLdouble) _cam2D.getX() - 1, 
+		  	     (GLdouble)(_cam2D.getWidth() + _cam2D.getX() - 1), 
+		  		   (GLdouble)(_cam2D.getHeight() + _cam2D.getY() - 1), 
+		  		   (GLdouble) _cam2D.getY() - 1);*/
+  _projection = glm::ortho((GLdouble) _cam2D.getX() - 1, 
 		  	     (GLdouble)(_cam2D.getWidth() + _cam2D.getX() - 1), 
 		  		   (GLdouble)(_cam2D.getHeight() + _cam2D.getY() - 1), 
 		  		   (GLdouble) _cam2D.getY() - 1);
-
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
+  _modelview = glm::mat4(1.0);
+  /*glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();*/
 
   n = _entities2D.size();
 

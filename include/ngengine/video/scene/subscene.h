@@ -7,6 +7,12 @@
 #include <ngengine/video/D3/camera/camera.h>
 #include <vector>
 
+// pour les matrices de projection et modelview
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 namespace nge {
   namespace scene {
 
@@ -41,6 +47,9 @@ namespace nge {
 
       nge::video::D2::Camera *getCamera2D();
       nge::video::D3::Camera *getCamera3D();
+
+      glm::mat4 _projection;
+      glm::mat4 _modelview;
 
     private:
   

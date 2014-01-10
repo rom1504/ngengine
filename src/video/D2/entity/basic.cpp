@@ -93,6 +93,11 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
   Uint32 i, j, k, l;
   Uint32 alpha;
 
+  if(_shader) {
+    glUseProgram(_shader->get_id());
+  }
+  else;
+
   if(_tex && _texCoords) {
 
     if(!glIsEnabled(GL_TEXTURE_2D))
@@ -107,12 +112,12 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
     else;
   }
 
-  glPushMatrix();
+  //glPushMatrix();
 
-  glTranslated((double) x, (double) y, 0.);
-  glRotated(_angle, 0., 0., 1.);
+  //glTranslated((double) x, (double) y, 0.);
+  //glRotated(_angle, 0., 0., 1.);
 
-  glBegin(_renderType);
+  /*glBegin(_renderType);
 
 #define setGLColor() alpha = _colorsBuf[l + 3]; \
                      alpha *= _alpha; \
@@ -144,6 +149,22 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
 
   glEnd();
 
-  glPopMatrix();
+  glPopMatrix();*/
+
+  glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, 0, _verticesBuf);
+  glEnableVertexAttribArray(0);
+
+  if(_shader) {
+    _shader->update_matrix();
+  }
+  else;
+
+  glDrawArrays(_renderType, 0, _nbVertices * _nbForms);
+  glDisableVertexAttribArray(0);
+
+  if(_shader) {
+    glUseProgram(0);
+  }
+  else;
 }
 

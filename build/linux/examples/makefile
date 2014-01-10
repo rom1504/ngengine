@@ -1,9 +1,9 @@
 all:
-	cd 01_Basic && $(MAKE)
-	cd 02_Scene && $(MAKE)
-	cd 03_Texture && $(MAKE)
-	cd 04_Camera && $(MAKE)
-	cd 05_3D && $(MAKE)
-	cd 06_CameraQuat && $(MAKE)
-	cd 07_Text && $(MAKE)
+	cd example && $(MAKE) EXAMPLE=01_Basic RESOURCES=true
+#	cd example && $(MAKE) EXAMPLE=02_Scene RESOURCES=true
+#	cd example && $(MAKE) EXAMPLE=03_Texture RESOURCES=true
+#	cd example && $(MAKE) EXAMPLE=04_Camera RESOURCES=true
+#	cd example && $(MAKE) EXAMPLE=05_3D RESOURCES=true
+#	cd example && $(MAKE) EXAMPLE=06_CameraQuat RESOURCES=true
+#	cd example && $(MAKE) EXAMPLE=07_Text RESOURCES=true
 

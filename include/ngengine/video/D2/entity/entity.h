@@ -2,6 +2,7 @@
 #define NATIV_GAMES_ENGINE_VIDEO_D2_ENTITY_ENTITY_H
 
 #include <ngengine/utils/types.h>
+#include <ngengine/video/shader/shader.h>
 #include <glm/glm.hpp>
 
 namespace nge {
@@ -20,6 +21,8 @@ namespace nge {
 
       glm::vec2 *getPosition();
       double *getAngle();
+
+      shader::Shader *_shader;
 
     protected:
       glm::vec2 _pos;
