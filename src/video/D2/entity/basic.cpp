@@ -122,6 +122,8 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
 
   // translation
   *(_shader->_modelview) = glm::translate(*(_shader->_modelview), glm::vec3((float) x, (float) y, 0.f));
+  // rotation
+  *(_shader->_modelview) = glm::rotate(*(_shader->_modelview), (float) _angle, glm::vec3(0.f, 0.f, 1.f));
 
   glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, 0, _verticesBuf);
   glEnableVertexAttribArray(0);
