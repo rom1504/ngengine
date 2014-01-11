@@ -39,19 +39,18 @@ int main(int argc, char **argv)
   // Création de la fenêtre
 
   fenetre = SDL_CreateWindow(
-  "NGEngine - 01Basic", 
-  SDL_WINDOWPOS_CENTERED, 
-  SDL_WINDOWPOS_CENTERED, 
-  800, 600, 
-  SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
+    "NGEngine - 01Basic", 
+    SDL_WINDOWPOS_CENTERED, 
+    SDL_WINDOWPOS_CENTERED, 
+    800, 600, 
+    SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
   );
 
-  if(fenetre == 0)
-  {
-  std::cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << std::endl;
-  SDL_Quit();
+  if(fenetre == 0) {
+    std::cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << std::endl;
+    SDL_Quit();
 
-  return -1;
+    return -1;
   }
 
 
@@ -61,20 +60,16 @@ int main(int argc, char **argv)
 
   if(contexteOpenGL == 0)
   {
-  std::cout << SDL_GetError() << std::endl;
-  SDL_DestroyWindow(fenetre);
-  SDL_Quit();
-
-  return -1;
+    std::cout << SDL_GetError() << std::endl;
+    SDL_DestroyWindow(fenetre);
+    SDL_Quit();
+    return -1;
   }
 
   // On initialise GLEW
-
   GLenum initialisationGLEW( glewInit() );
 
-
   // Si l'initialisation a échouée :
-
   if(initialisationGLEW != GLEW_OK)
   {
     // On affiche l'erreur grâce à la fonction : glewGetErrorString(GLenum code)
@@ -91,41 +86,67 @@ int main(int argc, char **argv)
     return -1;
   }
 
+  glClearColor(0.3, 0.3, 0.5, 1.);
+
   // Vertices et coordonnées
 
 //  float vertices[] = {-0.5, -0.5,   0.0, 0.5,   0.5, -0.5};
 
   // Création de la subscene
 
+  nge::scene::SubScene subscene(600, 800, 600, 0, 0);
+
   Sint32 vertices[] = {
-  0, 0,
-  10, 10,
-  10, 0
+    0, 0,
+    160, 160,
+    160, 0
   };
 
   Uint8 colors[] = {
-  255, 255, 255, 255,
-  0, 0, 255, 255,
-  255, 255, 255, 255
+    255, 0, 0, 255, 
+    0, 255, 0, 255,
+    0, 0, 255, 255
   };
 
-  nge::scene::SubScene subscene(600, 800, 600, 0, 0);
-  nge::video::D2::entity::Basic e1(3, 1, GL_TRIANGLES);
+  nge::video::D2::entity::Basic e1(3, 1, GL_TRIANGLES), e2(3, 1, GL_TRIANGLES);
 
-  nge::video::shader::Shader *shader = new nge::video::shader::Shader("basique2D.vert", "basique2D.frag");
-  if(!shader->compile())
-    printf("shaders non compilés\n");
-  else printf("shaders compilés\n");
+  nge::video::shader::Shader *shaders[3];
 
-  shader->set_matrix(&subscene._projection, &subscene._modelview);
+  shaders[0] = new nge::video::shader::Shader();
+  if(!shaders[0]->load_files("Shaders/vertex2.vert", "Shaders/vertex2.frag"))
+    printf("fichiers des shaders non trouvés.\n");
+
+  shaders[1] = new nge::video::shader::Shader();
+  if(!shaders[1]->load_files("Shaders/vertex2color4.vert", "Shaders/vertex2color4.frag"))
+    printf("fichiers des shaders non trouvés.\n");
+
+/*  shaders[2] = new nge::video::shader::Shader();
+  shader->load_files("Shaders/vertex2.vert", "Shaders/vertex2.frag");*/
+
+  if(!shaders[0]->compile())
+    printf("shaders not compiled\n");
+  else 
+    printf("shaders compiled\n");
+
+  if(!shaders[1]->compile())
+    printf("shaders not compiled\n");
+  else 
+    printf("shaders compiled\n");
+
+  shaders[0]->set_matrix(&subscene._projection, &subscene._modelview);
+  shaders[1]->set_matrix(&subscene._projection, &subscene._modelview);
+//shaders[2]->set_matrix(&subscene._projection, &subscene._modelview);
 
   e1.setVertexBuf(vertices, false);  // (x, y) couples
-  e1.setColorBuf(colors, false);
+  e1._shader = shaders[0];
 
-  e1._shader = shader;
+  e2.setVertexBuf(vertices, false);  // (x, y) couples
+  e2.setColorBuf(colors, false);
+  e2._shader = shaders[1];
+  *(e2.getPosition()) = glm::vec2(165, 1);
 
   subscene.add(&e1);
-
+  subscene.add(&e2);
 
   // Boucle principale
 
@@ -152,7 +173,8 @@ int main(int argc, char **argv)
 
   // On quitte la SDL
 
-  delete shader;
+  delete shaders[0];
+  delete shaders[1];
 
   SDL_GL_DeleteContext(contexteOpenGL);
   SDL_DestroyWindow(fenetre);

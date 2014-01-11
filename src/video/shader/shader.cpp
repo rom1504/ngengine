@@ -4,16 +4,6 @@
 
 using namespace nge::video::shader;
 
-Shader::Shader(std::string vertex_source, std::string fragment_source)
-{
-  _vertex_source = this->read_file(vertex_source);
-  _fragment_source = this->read_file(fragment_source);
-
-  _projection = nullptr;
-  _modelview = nullptr;
-  _id = 0;
-}
-
 Shader::Shader()
 {
   _projection = nullptr;
@@ -26,6 +16,16 @@ Shader::~Shader()
   glDeleteShader(_vertex_id);
   glDeleteShader(_fragment_id);
   glDeleteProgram(_id);
+}
+
+bool Shader::load_files(std::string vertex_source, std::string fragment_source)
+{
+  bool ret;
+
+  ret =  this->read_file(vertex_source, &_vertex_source);
+  ret = ret && this->read_file(fragment_source, &_fragment_source);
+
+  return ret;
 }
 
 bool Shader::compile()
@@ -122,7 +122,7 @@ bool Shader::compile()
     return true;
 }
 
-bool Shader::compilerShader(GLuint &shader, GLenum type, std::string const &source_file)
+bool Shader::compilerShader(GLuint &shader, GLenum type, std::string const &code_source)
 {
   // shader's creation
 
@@ -134,25 +134,6 @@ bool Shader::compilerShader(GLuint &shader, GLenum type, std::string const &sour
     std::cout << "Error, shader type (" << type << ") doesn't exist" << std::endl;
     return false;
   }
-
-
-  // Opening the file
-
-  std::ifstream file(source_file.c_str());
-  // Test d'ouverture
-
-  if(!file)
-  {
-    std::cout << "Error file " << source_file << " not present" << std::endl;
-    glDeleteShader(shader);
-    return false;
-  }
-
-  // lecture du file
-  std::string code_source((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-  // Fermeture du file
-  file.close();
-
 
   // Récupération de la chaine C du code source
 
@@ -241,26 +222,21 @@ void Shader::update_matrix()
   else;
 }
 
-std::string Shader::read_file(std::string filename)
+bool Shader::read_file(std::string filename, std::string *dest)
 {
-  std::string s;
-
-  // Opening the file
+  bool ret = true;
 
   std::ifstream file(filename.c_str());
-  // Test d'ouverture
 
-  if(!file)
-  {
+  if(!file) {
     std::cout << "Error file " << filename << " not present" << std::endl;
+    ret = false;
   }
   else {
-    // lecture du file
-    s = std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    // Fermeture du file
+    *dest = std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     file.close();
   }
 
-  return s;
+  return ret;
 }
 

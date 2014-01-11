@@ -117,54 +117,42 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
   //glTranslated((double) x, (double) y, 0.);
   //glRotated(_angle, 0., 0., 1.);
 
-  /*glBegin(_renderType);
+  // push modelview
+  glm::mat4 modelview = *(_shader->_modelview);
 
-#define setGLColor() alpha = _colorsBuf[l + 3]; \
-                     alpha *= _alpha; \
-                     alpha /= 255; \
-                     glColor4ub(_colorsBuf[l], \
-                                _colorsBuf[l + 1],\
-                                _colorsBuf[l + 2], \
-                                (Uint8) alpha);
-  k = 0; // k va de 2 en 2
-  l = 0; // l va de 4 en 4
-
-  for(i = 0; i < _nbForms; i++) {
-    for(j = 0; j < _nbVertices; j++) {
-      
-      if(_texCoords && _tex) {
-        glTexCoord2d(_texCoords[k], 
-                     _texCoords[k + 1]);
-      }
-
-      setGLColor();
-
-      glVertex2i(_verticesBuf[k], 
-                 _verticesBuf[k + 1]);
-
-      k += 2;
-      l += 4;
-    }
-  }
-
-  glEnd();
-
-  glPopMatrix();*/
+  // translation
+  *(_shader->_modelview) = glm::translate(*(_shader->_modelview), glm::vec3((float) x, (float) y, 0.f));
 
   glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, 0, _verticesBuf);
   glEnableVertexAttribArray(0);
+
+  if(_colorsBuf) {
+    glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorsBuf);
+    glEnableVertexAttribArray(1);
+  }
 
   if(_shader) {
     _shader->update_matrix();
   }
   else;
 
+  glEnable(GL_BLEND);
+  glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+  glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+
   glDrawArrays(_renderType, 0, _nbVertices * _nbForms);
   glDisableVertexAttribArray(0);
+
+  if(_colorsBuf) {
+    glDisableVertexAttribArray(1);
+  }
 
   if(_shader) {
     glUseProgram(0);
   }
   else;
+
+  // pop modelview
+  *(_shader->_modelview) = modelview;
 }
 

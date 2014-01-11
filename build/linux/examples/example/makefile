@@ -22,8 +22,9 @@ DEST=../../../../bin/examples/$(EXAMPLE)/example
 $(DEST): $(OBJ) $(NGENGINE)
 	mkdir -p ../../../../bin/examples/$(EXAMPLE)
 	g++ -o $@ $(OBJ) $(CFLAGS)
+	cp -R ../../../../resources/Shaders ../../../../bin/examples/$(EXAMPLE)/
 ifdef RESOURCES
-	cp -R ../../../../resources/$(NAME)/* ../../../../bin/examples/$(NAME)/
+	cp -R ../../../../resources/$(EXAMPLE)/* ../../../../bin/examples/$(EXAMPLE)/
 endif
 
 %.o: %.cpp

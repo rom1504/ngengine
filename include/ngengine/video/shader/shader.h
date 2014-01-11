@@ -14,9 +14,9 @@ namespace shader {
     public:
 
       Shader();
-      Shader(std::string vertex_source, std::string fragment_source); // filenames
       ~Shader();
 
+      bool load_files(std::string vertex_source, std::string fragment_source);      
       bool compile();
 
       GLuint get_id();
@@ -28,18 +28,17 @@ namespace shader {
 
       std::string _vertex_source;
       std::string _fragment_source;
+      glm::mat4 *_projection;
+      glm::mat4 *_modelview;
 
     private:
 
-      bool compilerShader(GLuint &shader, GLenum type, std::string const &fichier_source);
-      std::string read_file(std::string filename);
-
+      bool compilerShader(GLuint &shader, GLenum type, std::string const &code_source);
+      bool read_file(std::string filename, std::string *dest);
       
       GLuint _id; // program id
       GLuint _vertex_id;
       GLuint _fragment_id;
-      glm::mat4 *_projection;
-      glm::mat4 *_modelview;
   };
 
 }
