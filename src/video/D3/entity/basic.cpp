@@ -70,14 +70,12 @@ void Basic::setTexture(texture::Texture *tex, bool toFree)
 
 void Basic::drawAtPosition(glm::vec3 pos)
 {
-  Uint32 i, j, k, l;
-  Uint32 alpha;
+  if(_shader) {
+    glUseProgram(_shader->get_id());
+  }
+  else;
 
-  glPushMatrix();
-  glTranslated(pos[0], pos[1], pos[2]);
-  glRotated(_rotation[0], _rotation[1], _rotation[2], _rotation[3]);
-
-  if(_tex && _texCoords) {
+  if(_tex) {
 
     if(!glIsEnabled(GL_TEXTURE_2D))
       glEnable(GL_TEXTURE_2D);
@@ -91,42 +89,66 @@ void Basic::drawAtPosition(glm::vec3 pos)
     else;
   }
 
-  
+  // push modelview
+  glm::mat4 modelview = *(_shader->_modelview);
 
-#define setGLColor() alpha = _colorsBuf[l + 3]; \
-                     alpha *= _alpha; \
-                     alpha /= 255; \
-                     glColor4ub(_colorsBuf[l], \
-                                _colorsBuf[l + 1],\
-                                _colorsBuf[l + 2], \
-                                (Uint8) alpha);
-  k = 0; // k va de 3 en 3
-  l = 0; // l va de 4 en 4
-  int z = 0; // z va de de 2 en 2
+  // translation
+  *(_shader->_modelview) = glm::translate(*(_shader->_modelview), pos);
+  // rotation
+  *(_shader->_modelview) = glm::rotate(*(_shader->_modelview), _rotation[3], 
+    glm::vec3(_rotation[0], _rotation[1], _rotation[2])
+  );
+
+  uint32_t i;
 
   for(i = 0; i < _nbForms; i++) {
-    glBegin(_renderType);
-    for(j = 0; j < _nbVertices; j++) {
-      
-      if(_texCoords && _tex) {
-        glTexCoord2d(_texCoords[z], 
-                     _texCoords[z + 1]);
-      }
 
-      setGLColor();
+    glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, 0, _verticesBuf + 3 * i);
+    glEnableVertexAttribArray(0);
 
-      glVertex3d(_verticesBuf[k], 
-                 _verticesBuf[k + 1],
-                 _verticesBuf[k + 2]);
-
-      z += 2;
-      k += 3;
-      l += 4;
+    if(_colorsBuf) {
+      glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorsBuf + 4 * i);
+      glEnableVertexAttribArray(1);
     }
-    glEnd();
+  
+    if(_tex) {
+      glVertexAttribPointer(2, 2, GL_DOUBLE, GL_FALSE, 0, _texCoords + 2 * i);
+      glEnableVertexAttribArray(2);
+    }
+
+    if(_shader) {
+      _shader->update_matrix();
+    }
+    else;
+
+    glEnable(GL_BLEND);
+    glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+
+    glDrawArrays(_renderType, 0, _nbVertices);
+    glDisableVertexAttribArray(0);
+
+    if(_colorsBuf) {
+      glDisableVertexAttribArray(1);
+    }
+
+    if(_tex) {
+      glBindTexture(GL_TEXTURE_2D, 0);
+      glDisableVertexAttribArray(2);
+    }
   }
 
-  glPopMatrix();
+  if(_shader) {
+    glUseProgram(0);
+  }
+  else;
+
+  if(_tex)
+    glBindTexture(GL_TEXTURE_2D, 0);
+  else;
+
+  // pop modelview
+  *(_shader->_modelview) = modelview;
 }
 
 

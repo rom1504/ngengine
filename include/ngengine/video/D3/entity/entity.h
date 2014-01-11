@@ -2,7 +2,7 @@
 #define NATIV_GAMES_ENGINE_VIDEO_D3_ENTITY_ENTITY_H
 
 #include <ngengine/utils/types.h>
-#include <glm/glm.hpp>
+#include <ngengine/video/shader/shader.h>
 
 namespace nge {
   namespace video {
@@ -21,6 +21,8 @@ namespace nge {
 
       glm::vec3 *getPosition();
       glm::vec4 *getRotation(); // angle x y z
+
+      shader::Shader *_shader;
 
     protected:
       glm::vec3 _pos;

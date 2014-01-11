@@ -3,7 +3,6 @@
 
 #include <ngengine/utils/types.h>
 #include <ngengine/video/shader/shader.h>
-#include <glm/glm.hpp>
 
 namespace nge {
   namespace video {
