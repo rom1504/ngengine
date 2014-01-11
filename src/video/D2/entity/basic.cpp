@@ -98,7 +98,7 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
   }
   else;
 
-  if(_tex && _texCoords) {
+  if(_tex) {
 
     if(!glIsEnabled(GL_TEXTURE_2D))
       glEnable(GL_TEXTURE_2D);
@@ -131,6 +131,11 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
     glEnableVertexAttribArray(1);
   }
 
+  if(_tex) {
+    glVertexAttribPointer(2, 2, GL_DOUBLE, GL_FALSE, 0, _texCoords);
+    glEnableVertexAttribArray(2);
+  }
+
   if(_shader) {
     _shader->update_matrix();
   }
@@ -145,6 +150,11 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
 
   if(_colorsBuf) {
     glDisableVertexAttribArray(1);
+  }
+
+  if(_tex) {
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisableVertexAttribArray(2);
   }
 
   if(_shader) {

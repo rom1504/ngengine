@@ -12,9 +12,10 @@
 */
 
 #include <ngengine/ngengine.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "NGE_SDL.h"
+#include <iostream>
 
 using namespace nge;
 using namespace nge::texture;
@@ -34,7 +35,11 @@ Texture *NGE_SDL_Texture_Load(const char *path)
 			//SDL_LockSurface(surface); -> peut poser des pb
 			buf = new PixelBuffer(surface->format->BytesPerPixel, surface->w, surface->h);
 			p = (Uint8 *) surface->pixels;
-			
+			std::cout << "Erreur : " << SDL_GetError() << std::endl;
+      printf("surface->format->BytesPerPixel = %d\n", surface->format->BytesPerPixel);
+      printf("surface->w = %d\n", surface->w);
+      printf("surface->h = %d\n", surface->h);
+
 			//for(i = 0; i < surface->h; i++) {
       for(i = surface->h - 1; i >= 0; i--) {
 				q = buf->getPixelAddr(0, i + (buf->getRealHeight() - buf->getHeight()));
@@ -73,7 +78,7 @@ Texture *NGE_SDL_Texture_Load(const char *path)
 	
 	return tex;
 }
-
+/*
 static void NGE_SDL_Event_LoadStates(nge::event::Event *event)
 {
 	SDLMod mod;
@@ -109,14 +114,14 @@ void NGE_SDL_Event_Init(nge::event::Event *event)
 		// il lui suffit de lacher la touche et de réappuyer.	
 	}
 	else;
-}
+}*/
 
 /*
 	La fonction marrante: un switch immonde.
 	Une bonne partie écrite à la main, sauf pour SDLK_a -> SDLK_z et SDLK_0 -> SDLK_9 où j'ai fait 1 script php avec 1 boucle et c'était plié (commande : "php script.php > truc.c" exécute le script php et met le résultat dans truc.c)
 	C'est une nouvelle bidouille pour BIDOUILLE :P
 */
-
+/*
 static nge::Uint8 Event_ConvertKey(SDLKey key)
 {
 	nge::Uint8 r = EC_EKM_Undefined;
@@ -448,24 +453,6 @@ bool NGE_SDL_Event_Get(nge::event::Event *event)
 						event->change.keyboard.keyId = Event_ConvertKey(sdlevent.key.keysym.sym);
 						event->map.keyboard.key[event->change.keyboard.keyId] = 0;
 					break;
-				/*case:
-					
-					break;
-				case:
-					
-					break;
-				case:
-					
-					break;
-				case:
-					
-					break;
-				case:
-					
-					break;
-				case:
-					
-					break;*/
 				default:
 						event->type = EC_Event_None;
 						ret = false;
@@ -479,7 +466,7 @@ bool NGE_SDL_Event_Get(nge::event::Event *event)
 	else;
 	
 	return ret;
-}
+}*/
 
 nge::Uint32 NGE_SDL_GetTime()
 {

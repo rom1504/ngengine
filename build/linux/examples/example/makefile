@@ -11,10 +11,10 @@ rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst 
 NGENGINE=../../../../bin/ngengine.a
 
 # Compilation Flags
-CFLAGS=-I ../../../../include/ -Wall -m64 -std=gnu++0x $(NGENGINE) -lSDL2 -lGL -lGLU -lGLEW -lSDL_image -I ../../../../externals/glm -I ../../../../externals/freetype-gl
+CFLAGS=-I ../../../../include/ -Wall -m64 -std=gnu++0x $(NGENGINE) -lSDL2 -lGL -lGLU -lGLEW -lSDL2_image -I ../../../../externals/glm -I ../../../../externals/freetype-gl -I ../../../../bridges/
 
 # Sources
-SRC=$(call rwildcard, ../../../../examples/$(EXAMPLE), *.cpp)
+SRC=$(call rwildcard, ../../../../examples/$(EXAMPLE), *.cpp) ../../../../bridges/SDL2/NGE_SDL.cpp
 
 OBJ=$(SRC:.cpp=.o)
 DEST=../../../../bin/examples/$(EXAMPLE)/example

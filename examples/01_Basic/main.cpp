@@ -1,4 +1,6 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/NGE_SDL.h>
 #include <iostream>
 #include <ngengine/ngengine.h>
 
@@ -15,13 +17,15 @@ int main(int argc, char **argv)
 	
   // Initialisation de la SDL
 	
-  if(SDL_Init(SDL_INIT_VIDEO) < 0)
+  if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_HAPTIC) < 0)
   {
-  std::cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << std::endl;
-  SDL_Quit();
+    std::cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << std::endl;
+    SDL_Quit();
 		
-  return -1;
+    return -1;
   }
+
+  IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 	
 	
   // Version d'OpenGL
@@ -34,7 +38,7 @@ int main(int argc, char **argv)
 	
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-	
+	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 	
   // Création de la fenêtre
 
@@ -98,17 +102,30 @@ int main(int argc, char **argv)
 
   Sint32 vertices[] = {
     0, 0,
+    160, 0,
+    0, 160,
     160, 160,
-    160, 0
   };
 
   Uint8 colors[] = {
     255, 0, 0, 255, 
+    0, 255, 255, 255,
     0, 255, 0, 255,
     0, 0, 255, 255
   };
 
-  nge::video::D2::entity::Basic e1(3, 1, GL_TRIANGLES), e2(3, 1, GL_TRIANGLES);
+  double texcoords[] {
+    0., 0.,
+    1., 0.,
+    0., 1.,
+    1., 1.
+  };
+
+  nge::texture::Texture *tex = NGE_SDL_Texture_Load("nge.png");
+  nge::video::D2::entity::Basic 
+    e1(4, 1, GL_TRIANGLE_STRIP), 
+    e2(4, 1, GL_TRIANGLE_STRIP), 
+    e3(4, 1, GL_TRIANGLE_STRIP);
 
   nge::video::shader::Shader *shaders[3];
 
@@ -120,8 +137,9 @@ int main(int argc, char **argv)
   if(!shaders[1]->load_files("Shaders/vertex2color4.vert", "Shaders/vertex2color4.frag"))
     printf("fichiers des shaders non trouvés.\n");
 
-/*  shaders[2] = new nge::video::shader::Shader();
-  shader->load_files("Shaders/vertex2.vert", "Shaders/vertex2.frag");*/
+  shaders[2] = new nge::video::shader::Shader();
+  if(!shaders[2]->load_files("Shaders/vertex2color4tex2.vert", "Shaders/vertex2color4tex2.frag"))
+    printf("fichiers des shaders non trouvés.\n");
 
   if(!shaders[0]->compile())
     printf("shaders not compiled\n");
@@ -133,9 +151,14 @@ int main(int argc, char **argv)
   else 
     printf("shaders compiled\n");
 
+  if(!shaders[2]->compile())
+    printf("shaders not compiled\n");
+  else 
+    printf("shaders compiled\n");
+
   shaders[0]->set_matrix(&subscene._projection, &subscene._modelview);
   shaders[1]->set_matrix(&subscene._projection, &subscene._modelview);
-//shaders[2]->set_matrix(&subscene._projection, &subscene._modelview);
+  shaders[2]->set_matrix(&subscene._projection, &subscene._modelview);
 
   e1.setVertexBuf(vertices, false);  // (x, y) couples
   e1._shader = shaders[0];
@@ -143,10 +166,18 @@ int main(int argc, char **argv)
   e2.setVertexBuf(vertices, false);  // (x, y) couples
   e2.setColorBuf(colors, false);
   e2._shader = shaders[1];
-  *(e2.getPosition()) = glm::vec2(165, 1);
+  *(e2.getPosition()) = glm::vec2(165, 0);
+
+  e3.setVertexBuf(vertices, false);  // (x, y) couples
+  e3.setColorBuf(colors, false);
+  e3.setTexCoords(texcoords, false);
+  e3.setTexture(tex, true);
+  e3._shader = shaders[2];
+  *(e3.getPosition()) = glm::vec2(330, 0);
 
   subscene.add(&e1);
   subscene.add(&e2);
+  subscene.add(&e3);
 
   // Boucle principale
 
@@ -175,6 +206,7 @@ int main(int argc, char **argv)
 
   delete shaders[0];
   delete shaders[1];
+  delete shaders[2];
 
   SDL_GL_DeleteContext(contexteOpenGL);
   SDL_DestroyWindow(fenetre);
