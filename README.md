@@ -53,6 +53,7 @@ An update to SDL 2.0 should be done in the future (and to OpenGL 3.1 or 3.2).
 
 - Lots of comments are in French, others are in English. They will definitly be re-written in English soon.
 - The 06_CameraQuat presents a bug: the rotation should be around the left\_axis and the normal\_axis, and when you do rounds with the camera, it turns over the target\_axis too... TO FIX
+- Moving to OpenGL 3.X
 
 #Licence
 

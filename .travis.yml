@@ -4,7 +4,9 @@ compiler:
 install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -qq
+  - sudo apt-get remove g++
   - sudo apt-get install -qq g++-4.8 glew-utils libsdl2-dev libsdl2-image-dev libfreetype*
+#  - sudo ln -s /usr/bin/gcc-4.8 /usr/bin/gcc
 
 script:
   - cd build/linux && make
