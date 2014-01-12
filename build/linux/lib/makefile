@@ -2,7 +2,7 @@
 rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
 
 # Compilation Flags
-CFLAGS=-I ../../../include/ -I ../../../externals/glm -I ../../../externals/freetype-gl/ -lGL -lGLU -lGLEW -Wall -m64 -std=gnu++0x
+CFLAGS=-I ../../../include/ -I ../../../externals/glm -I ../../../externals/freetype-gl/ -lGL -lGLU -lGLEW -Wall -m64 -std=gnu++0x `freetype-config --cflags`
 
 # Sources
 SRC_FREETYPE_GL=edtaa3func.c font-manager.c mat4.c platform.c shader.c text-buffer.c texture-atlas.c texture-font.c vector.c vertex-attribute.c vertex-buffer.c
