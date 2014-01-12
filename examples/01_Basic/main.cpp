@@ -98,7 +98,10 @@ int main(int argc, char **argv)
 
   // Création de la subscene
 
-  nge::scene::SubScene subscene(600, 800, 600, 0, 0);
+  nge::scene::Scene scene;
+  nge::scene::SubScene *subscene = new nge::scene::SubScene(600, 800, 600, 0, 0);
+
+  scene.add(subscene);
 
   Sint32 vertices[] = {
     0, 0,
@@ -156,9 +159,9 @@ int main(int argc, char **argv)
   else 
     printf("shaders compiled\n");
 
-  shaders[0]->set_matrix(&subscene._projection, &subscene._modelview);
-  shaders[1]->set_matrix(&subscene._projection, &subscene._modelview);
-  shaders[2]->set_matrix(&subscene._projection, &subscene._modelview);
+  shaders[0]->set_matrix(&subscene->_projection, &subscene->_modelview);
+  shaders[1]->set_matrix(&subscene->_projection, &subscene->_modelview);
+  shaders[2]->set_matrix(&subscene->_projection, &subscene->_modelview);
 
   e1.setVertexBuf(vertices, false);  // (x, y) couples
   e1._shader = shaders[0];
@@ -175,9 +178,9 @@ int main(int argc, char **argv)
   e3._shader = shaders[2];
   *(e3.getPosition()) = glm::vec2(330, 0);
 
-  subscene.add(&e1);
-  subscene.add(&e2);
-  subscene.add(&e3);
+  subscene->add(&e1);
+  subscene->add(&e2);
+  subscene->add(&e3);
 
   // Boucle principale
 
@@ -194,7 +197,7 @@ int main(int argc, char **argv)
     // Nettoyage de l'écran
 
     glClear(GL_COLOR_BUFFER_BIT);
-    subscene.draw();
+    subscene->draw();
 
     // Actualisation de la fenêtre
 
@@ -245,7 +248,7 @@ int main(int argc, char **argv)
   e1.setVertexBuf(vertices, false);  // (x, y) couples
   e1.setColorBuf(colors, false); 
 
-  subscene.add(&e1);
+  subscene->add(&e1);
 
   //
 
@@ -279,7 +282,7 @@ int main(int argc, char **argv)
 
   glClear(GL_COLOR_BUFFER_BIT);
 
-  subscene.draw();
+  subscene->draw();
 
   glFlush();
   SDL_GL_SwapBuffers();
