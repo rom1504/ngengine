@@ -1,9 +1,7 @@
 #ifndef NATIV_GAMES_ENGINE_VIDEO_D2_ENTITY_TEXT_H
 #define NATIV_GAMES_ENGINE_VIDEO_D2_ENTITY_TEXT_H
 
-#include <ngengine/video/D2/entity/entity.h>
-#include <ngengine/video/opengl/opengl.h>
-#include <ngengine/video/texture/texture.h>
+#include <ngengine/video/D2/entity/basic.h>
 #include <vector>
 
 #include "freetype-gl.h"
@@ -14,11 +12,15 @@ namespace D2 {
 namespace entity {
 namespace text {
  
-  struct TextCharacter {
-    nge::texture::Texture *tex;
-    float texcoords[8]; // 4 * 2
-    float vertices[8];
-    uint8_t r, g, b, a;
+  class TextCharacter : public nge::video::D2::entity::Basic {
+    public:
+
+      TextCharacter(nge::video::shader::Shader *shader);
+      virtual ~TextCharacter();
+
+      int32_t _char; // utf-8 character
+
+    private:
   };
 
   class Text : public Entity {
@@ -37,11 +39,12 @@ namespace text {
   class Font {
     public:
 
-      Font(const char *filename, size_t i);
+      Font(nge::video::shader::Shader *shader, const char *filename, size_t i);
       ~Font();
 
     //private:
 
+      nge::video::shader::Shader *_shader;
       texture_atlas_t *_atlas;
       nge::texture::Texture *_atlas_tex;
       texture_font_t *_font;
