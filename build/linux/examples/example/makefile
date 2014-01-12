@@ -11,7 +11,7 @@ rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst 
 NGENGINE=../../../../bin/ngengine.a
 
 # Compilation Flags
-CFLAGS=-I ../../../../include/ -Wall -m64 -std=gnu++0x $(NGENGINE) -lSDL2 -lGL -lGLU -lGLEW -lSDL2_image -I ../../../../externals/glm -I ../../../../externals/freetype-gl -I ../../../../bridges/
+CFLAGS=-I ../../../../include/ -Wall -m64 -std=gnu++0x $(NGENGINE) -lSDL2 -lGL -lGLU -lGLEW -lSDL2_image -I ../../../../externals/glm -I ../../../../externals/freetype-gl -I ../../../../bridges/ `freetype-config --libs`
 
 # Sources
 SRC=$(call rwildcard, ../../../../examples/$(EXAMPLE), *.cpp) ../../../../bridges/SDL2/NGE_SDL.cpp

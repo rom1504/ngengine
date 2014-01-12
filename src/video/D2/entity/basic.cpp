@@ -23,6 +23,7 @@ Basic::Basic(Uint32 nbVertices, Uint32 nbForms, GLenum renderType)
   _renderType = renderType;
 
   _alpha = 255;
+  _angle = 0;
 }
 
 Basic::~Basic()

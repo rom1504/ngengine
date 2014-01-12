@@ -37,7 +37,7 @@ An update to SDL 2.0 should be done in the future (and to OpenGL 3.1 or 3.2).
 
 ###With Apt-Get
 
-- sudo apt-get install glew-utils libsdl2-dev libsdl2-image-dev
+- sudo apt-get install glew-utils libsdl2-dev libsdl2-image-dev libfreetype*
 - cd ngengine && git submodule init && git submodule update
 - cd build/linux && make
 
