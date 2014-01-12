@@ -35,10 +35,6 @@ Texture *NGE_SDL_Texture_Load(const char *path)
 			//SDL_LockSurface(surface); -> peut poser des pb
 			buf = new PixelBuffer(surface->format->BytesPerPixel, surface->w, surface->h);
 			p = (Uint8 *) surface->pixels;
-			std::cout << "Erreur : " << SDL_GetError() << std::endl;
-      printf("surface->format->BytesPerPixel = %d\n", surface->format->BytesPerPixel);
-      printf("surface->w = %d\n", surface->w);
-      printf("surface->h = %d\n", surface->h);
 
 			//for(i = 0; i < surface->h; i++) {
       for(i = surface->h - 1; i >= 0; i--) {
