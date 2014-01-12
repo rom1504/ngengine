@@ -67,6 +67,7 @@ bool Shader::compile()
   glBindAttribLocation(_id, 0, "in_Vertex");
   glBindAttribLocation(_id, 1, "in_Color");
   glBindAttribLocation(_id, 2, "in_TexCoord0");
+  glBindAttribLocation(_id, 3, "in_Alpha");
 
 
   // Linkage du programme

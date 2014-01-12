@@ -11,8 +11,8 @@ int main(int argc, char **argv)
   SDL_Window* fenetre(0);
   SDL_GLContext contexteOpenGL(0);
 	
-  SDL_Event evenements;
-  bool terminer(false);
+  SDL_Event event;
+  bool done(false);
 	
 	
   // Initialisation de la SDL
@@ -128,7 +128,8 @@ int main(int argc, char **argv)
   nge::video::D2::entity::Basic 
     e1(4, 1, GL_TRIANGLE_STRIP), 
     e2(4, 1, GL_TRIANGLE_STRIP), 
-    e3(4, 1, GL_TRIANGLE_STRIP);
+    e3(4, 1, GL_TRIANGLE_STRIP), 
+    e4(4, 1, GL_TRIANGLE_STRIP);
 
   nge::video::shader::Shader *shaders[3];
 
@@ -174,26 +175,61 @@ int main(int argc, char **argv)
   e3.setVertexBuf(vertices, false);  // (x, y) couples
   e3.setColorBuf(colors, false);
   e3.setTexCoords(texcoords, false);
-  e3.setTexture(tex, true);
+  e3.setTexture(tex, true); // free the texture
   e3._shader = shaders[2];
   *(e3.getPosition()) = glm::vec2(330, 0);
+
+  e4.setVertexBuf(vertices, false);  // (x, y) couples
+  e4.setColorBuf(colors, false);
+  e4.setTexCoords(texcoords, false);
+  e4.setTexture(tex, false); // don't free the texture
+  e4._shader = shaders[2];
+  *(e4.getPosition()) = glm::vec2(0, 170);
 
   subscene->add(&e1);
   subscene->add(&e2);
   subscene->add(&e3);
+  subscene->add(&e4);
+
+  char down;
 
   // Boucle principale
-
-  while(!terminer)
+  while(!done)
   {
     // Gestion des évènements
+    if(SDL_PollEvent(&event)) {
 
-    SDL_WaitEvent(&evenements);
+      switch(event.type) {
+      
+      case SDL_QUIT:
+        done = 1;
+        break;
 
-    if(evenements.window.event == SDL_WINDOWEVENT_CLOSE)
-      terminer = true;
+      case SDL_KEYDOWN:
+        switch (event.key.keysym.sym) {
+          case SDLK_ESCAPE:
+          case SDLK_q:
+          done = 1;
+          break;
+          default:
+          break;
+        }
+        break;
+      default:
+        break;
+      }
+    }
 
+    if(event.window.event == SDL_WINDOWEVENT_CLOSE)
+      done = true;
 
+    // on met à jour
+    if(e4._alpha == 255)
+      down = -5;
+    else if(e4._alpha == 0)
+      down = 5;
+    
+    e4._alpha += down;
     // Nettoyage de l'écran
 
     glClear(GL_COLOR_BUFFER_BIT);
@@ -202,6 +238,8 @@ int main(int argc, char **argv)
     // Actualisation de la fenêtre
 
     SDL_GL_SwapWindow(fenetre);
+
+    SDL_Delay(30);
   }
 
 
@@ -217,80 +255,4 @@ int main(int argc, char **argv)
 
   return 0;
 }
-/*
-int main(int argc, char **argv)
-{
-  SDL_Init(SDL_INIT_VIDEO);
-	SDL_SetVideoMode(800, 600, 32, SDL_OPENGL | SDL_DOUBLEBUF);
-	SDL_WM_SetCaption("NGEngine - 01Basic", NULL);
-
-  glewInit();
-
-  glClearColor(0.3, 0.3, 0.5, 1.);
-
-  // Création de la subscene
-
-  Sint32 vertices[] = {
-  0, 0,
-  150, 150,
-  150, 0
-  };
-
-  Uint8 colors[] = {
-  255, 255, 255, 255,
-  0, 0, 255, 255,
-  255, 255, 255, 255
-  };
-
-  nge::scene::SubScene subscene(600, 800, 600, 0, 0);
-  nge::video::D2::entity::Basic e1(3, 1, GL_TRIANGLES);
-
-  e1.setVertexBuf(vertices, false);  // (x, y) couples
-  e1.setColorBuf(colors, false); 
-
-  subscene->add(&e1);
-
-  //
-
-  SDL_Event event;
-  int done = 0;
-
-  while(!done) {
-
-  if(SDL_PollEvent(&event)) {
-
-  switch(event.type) {
-  
-  case SDL_QUIT:
-    done = 1;
-    break;
-
-  case SDL_KEYDOWN:
-    switch (event.key.keysym.sym) {
-    case SDLK_ESCAPE:
-    case SDLK_q:
-    done = 1;
-    break;
-    default:
-    break;
-    }
-    break;
-  default:
-    break;
-  }
-  }
-
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  subscene->draw();
-
-  glFlush();
-  SDL_GL_SwapBuffers();
-  }
-
-
-  SDL_Quit();
-
-  return 0;
-}*/
 

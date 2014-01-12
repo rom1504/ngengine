@@ -3,6 +3,7 @@
 
 // input
 in vec4 color;
+in float alpha;
 
 // output
 out vec4 out_Color;
@@ -11,6 +12,6 @@ out vec4 out_Color;
 void main()
 {
   // pixel final color
-  out_Color = color;
+  out_Color = color * vec4(1.0, 1.0, 1.0, alpha);
 }
 

@@ -29,9 +29,9 @@ namespace nge {
 
       void drawAtPosition(Sint32 x, Sint32 y);
 
-    private:
-
       Uint8 _alpha;
+
+    private:
 
       Sint32 *_verticesBuf;
       Uint8  *_colorsBuf;

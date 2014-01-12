@@ -117,7 +117,11 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
   // rotation
   *(_shader->_modelview) = glm::rotate(*(_shader->_modelview), (float) _angle, glm::vec3(0.f, 0.f, 1.f));
 
-  uint32_t i;
+  uint32_t i, j;
+
+  uint8_t alpha[_nbVertices];
+  for(j = 0; j < _nbVertices; j++)
+    alpha[j] = _alpha;
 
   for(i = 0; i < _nbForms; i++) {
 
@@ -133,6 +137,9 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
       glVertexAttribPointer(2, 2, GL_DOUBLE, GL_FALSE, 0, _texCoords + 2 * i);
       glEnableVertexAttribArray(2);
     }
+
+    glVertexAttribPointer(3, 1, GL_UNSIGNED_BYTE, GL_TRUE, 0, alpha);
+    glEnableVertexAttribArray(3);
 
     if(_shader) {
       _shader->update_matrix();
@@ -154,6 +161,8 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
       glBindTexture(GL_TEXTURE_2D, 0);
       glDisableVertexAttribArray(2);
     }
+
+    glDisableVertexAttribArray(3);
   }
 
   if(_shader) {
