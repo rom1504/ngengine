@@ -2,8 +2,9 @@ language: cpp
 compiler:
   - gcc
 install:
-  - sudo apt-get install -qq g++-4.8
-  - sudo apt-get update -qq glew-utils libsdl2-dev libsdl2-image-dev libfreetype*
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq g++-4.8 glew-utils libsdl2-dev libsdl2-image-dev libfreetype*
 
 script:
   - cd build/linux && make
