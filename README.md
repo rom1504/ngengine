@@ -1,4 +1,6 @@
-#Presentation
+#NGEngine
+
+[![Build Status](https://travis-ci.org/nativgames/ngengine.png?branch=master)](https://travis-ci.org/nativgames/ngengine)
 
 NGEngine by Nativ' Games is a C++ 2D/3D Game Engine, with the minimum of dependencies:
 - OpenGL: A low-level graphics library
