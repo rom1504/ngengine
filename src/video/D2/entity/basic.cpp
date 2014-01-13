@@ -126,16 +126,16 @@ void Basic::drawAtPosition(Sint32 x, Sint32 y)
 
   for(i = 0; i < _nbForms; i++) {
 
-    glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, 0, _verticesBuf + 2 * i);
+    glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, 0, _verticesBuf + (2 * _nbVertices) * i);
     glEnableVertexAttribArray(0);
 
     if(_colorsBuf) {
-      glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorsBuf + 4 * i);
+      glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorsBuf + (4 * _nbVertices) * i);
       glEnableVertexAttribArray(1);
     }
   
     if(_tex) {
-      glVertexAttribPointer(2, 2, GL_DOUBLE, GL_FALSE, 0, _texCoords + 2 * i);
+      glVertexAttribPointer(2, 2, GL_DOUBLE, GL_FALSE, 0, _texCoords + (2 * _nbVertices) * i);
       glEnableVertexAttribArray(2);
     }
 

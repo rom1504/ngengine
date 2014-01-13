@@ -71,25 +71,15 @@ void SubScene::draw()
   glDisable(GL_TEXTURE_2D);
 
   if(_entities3D.size() > 0) {
-/*    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();*/
 
-    _projection = glm::perspective(
-      _cam3D->getFovy(),
-      _cam3D->getAspect(), 
-      _cam3D->getZNear(), 
-      _cam3D->getZFar()
-    );
-
-/*    gluPerspective(_cam3D->getFovy(),
-                   _cam3D->getAspect(), 
-                   _cam3D->getZNear(), 
-                   _cam3D->getZFar());
-    
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-*/
     if(_cam3D) {
+
+      _projection = glm::perspective(
+        _cam3D->getFovy(),
+        _cam3D->getAspect(), 
+        _cam3D->getZNear(),
+        _cam3D->getZFar()
+      );
  
       glm::vec3 *pos, *target, *normal;
 
@@ -97,46 +87,16 @@ void SubScene::draw()
       target = _cam3D->getTarget();
       normal = _cam3D->getNormal();
 
+      _modelview = glm::mat4(1.0);
       _modelview = glm::lookAt(
-        glm::vec3((*pos)[0], (*pos)[1], (*pos)[2]),
-        glm::vec3((*target)[0], (*target)[1], (*target)[2]),
-        glm::vec3((*normal)[0], (*normal)[1], (*normal)[2])
+        *pos,
+        *target,
+        *normal
       );
-      /*gluLookAt((*pos)[0], 
-                (*pos)[1],
-                (*pos)[2],
-                (*target)[0], 
-                (*target)[1],
-                (*target)[2],
-                (*normal)[0], 
-                (*normal)[1],
-                (*normal)[2]);*/
     }
     else
-      gluLookAt(3,4,2,0,0,0,0,0,1);
+      printf("No 3D camera in the subscene...\n");
 
-  /*  glBegin(GL_QUADS);
- 
-    glColor3ub(255,0,0); //face rouge
-    glVertex3d(1,1,1);
-    glVertex3d(1,1,-1);
-    glVertex3d(-1,1,-1);
-    glVertex3d(-1,1,1);
- 
-    glColor3ub(0,255,0); //face verte
-    glVertex3d(1,-1,1);
-    glVertex3d(1,-1,-1);
-    glVertex3d(1,1,-1);
-    glVertex3d(1,1,1);
- 
-    glColor3ub(0,0,255); //face bleue
-    glVertex3d(-1,-1,1);
-    glVertex3d(-1,-1,-1);
-    glVertex3d(1,-1,-1);
-    glVertex3d(1,-1,1);
- 
-    glEnd();
-*/
     n = _entities3D.size();
 
     for(i = 0; i < n; i++) {
@@ -144,25 +104,17 @@ void SubScene::draw()
     }
   }
 
-  /*glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();*/
   _projection = glm::mat4();
 
   glClear(GL_DEPTH_BUFFER_BIT);
 
   glDisable(GL_DEPTH_TEST);
 
-  /*gluOrtho2D((GLdouble) _cam2D.getX() - 1, 
-		  	     (GLdouble)(_cam2D.getWidth() + _cam2D.getX() - 1), 
-		  		   (GLdouble)(_cam2D.getHeight() + _cam2D.getY() - 1), 
-		  		   (GLdouble) _cam2D.getY() - 1);*/
   _projection = glm::ortho((GLdouble) _cam2D.getX() - 1, 
 		  	     (GLdouble)(_cam2D.getWidth() + _cam2D.getX() - 1), 
 		  		   (GLdouble)(_cam2D.getHeight() + _cam2D.getY() - 1), 
 		  		   (GLdouble) _cam2D.getY() - 1);
   _modelview = glm::mat4(1.0);
-  /*glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();*/
 
   n = _entities2D.size();
 
@@ -172,36 +124,6 @@ void SubScene::draw()
 
   glEnable(GL_DEPTH_TEST);
 }
-
-/*void SubScene::draw()
-{
-  int i, n;
-
-  glViewport(
-    (GLint) _x, 
-    _screenHeight - ((GLint) _y) - _height, 
-    (GLsizei) _width, 
-    (GLsizei) _height
-  );
-
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-
-  gluOrtho2D((GLdouble) _cam2D.getX() - 1, 
-		  	     (GLdouble)(_cam2D.getWidth() + _cam2D.getX() - 1), 
-		  		   (GLdouble)(_cam2D.getHeight() + _cam2D.getY() - 1), 
-		  		   (GLdouble) _cam2D.getY() - 1);
-
-  glMatrixMode(GL_MODELVIEW);
-  glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-  n = _entities2D.size();
-
-  for(i = 0; i < n; i++) {
-    _entities2D[i]->draw();
-  }
-}*/
 
 void SubScene::setScreenHeight(Uint32 screenHeight)
 {

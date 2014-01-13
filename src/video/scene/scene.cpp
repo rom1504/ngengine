@@ -33,18 +33,11 @@ void Scene::draw()
   if(!glIsEnabled(GL_DEPTH_TEST))
     glEnable(GL_DEPTH_TEST);
 
-  /*glEnable(GL_BLEND);
-  glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
-  glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);*/
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//  glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
-
   n = _subscenes.size();
 
   for(i = 0; i < n; i++) {
     _subscenes[i]->draw();
   }
-//  glDisable(GL_BLEND);
 }
 
 void Scene::updateScreenHeight(Uint32 screenHeight)

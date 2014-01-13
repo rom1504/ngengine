@@ -95,35 +95,42 @@ void Basic::drawAtPosition(glm::vec3 pos)
   // translation
   *(_shader->_modelview) = glm::translate(*(_shader->_modelview), pos);
   // rotation
-  *(_shader->_modelview) = glm::rotate(*(_shader->_modelview), _rotation[3], 
+  /**(_shader->_modelview) = glm::rotate(*(_shader->_modelview), _rotation[3], 
     glm::vec3(_rotation[0], _rotation[1], _rotation[2])
-  );
+  );*/
 
-  uint32_t i;
+  uint32_t i, j;
+
+  uint8_t alpha[_nbVertices];
+  for(j = 0; j < _nbVertices; j++)
+    alpha[j] = _alpha;
 
   for(i = 0; i < _nbForms; i++) {
 
-    glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, 0, _verticesBuf + 3 * i);
+    glVertexAttribPointer(0, 3, GL_DOUBLE, GL_FALSE, 0, _verticesBuf + (3 * _nbVertices) * i);
     glEnableVertexAttribArray(0);
 
     if(_colorsBuf) {
-      glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorsBuf + 4 * i);
+      glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorsBuf + (4 * _nbVertices) * i);
       glEnableVertexAttribArray(1);
     }
   
     if(_tex) {
-      glVertexAttribPointer(2, 2, GL_DOUBLE, GL_FALSE, 0, _texCoords + 2 * i);
+      glVertexAttribPointer(2, 2, GL_DOUBLE, GL_FALSE, 0, _texCoords + (2 * _nbVertices) * i);
       glEnableVertexAttribArray(2);
     }
 
-    if(_shader) {
+    glVertexAttribPointer(3, 1, GL_UNSIGNED_BYTE, GL_TRUE, 0, alpha);
+    glEnableVertexAttribArray(3);
+
+     if(_shader) {
       _shader->update_matrix();
     }
     else;
 
-    glEnable(GL_BLEND);
+    /*glEnable(GL_BLEND);
     glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
-    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);*/
 
     glDrawArrays(_renderType, 0, _nbVertices);
     glDisableVertexAttribArray(0);
@@ -136,6 +143,8 @@ void Basic::drawAtPosition(glm::vec3 pos)
       glBindTexture(GL_TEXTURE_2D, 0);
       glDisableVertexAttribArray(2);
     }
+
+    glDisableVertexAttribArray(3);
   }
 
   if(_shader) {
