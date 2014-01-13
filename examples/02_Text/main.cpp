@@ -135,7 +135,10 @@ int main(int argc, char **argv)
   nge::video::D2::entity::text::Pen *pen = new nge::video::D2::entity::text::Pen(e1);
 
   pen->_y = 25;
-  pen->write("A Quick Brown Fox Jumps Over The Lazy Dog 0123456789", &font);
+  pen->write(L"testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
+              "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
+              "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
+              "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest", &font);
 
   delete pen;
 
@@ -178,7 +181,7 @@ int main(int argc, char **argv)
   while(!done)
   {
     // Gestion des évènements
-    if(SDL_PollEvent(&event)) {
+    while(SDL_PollEvent(&event)) {
 
       switch(event.type) {
       

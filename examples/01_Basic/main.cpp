@@ -197,7 +197,7 @@ int main(int argc, char **argv)
   while(!done)
   {
     // Gestion des évènements
-    if(SDL_PollEvent(&event)) {
+    while(SDL_PollEvent(&event)) {
 
       switch(event.type) {
       

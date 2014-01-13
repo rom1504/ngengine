@@ -56,7 +56,7 @@ namespace text {
       Pen(Text *txt);
       ~Pen();
 
-      void write(char *str, Font *font);
+      void write(wchar_t *str, Font *font);
 
 //    private:
       Text *_text;

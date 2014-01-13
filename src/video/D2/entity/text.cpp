@@ -1,6 +1,7 @@
 #include <ngengine/video/D2/entity/text.h>
 #include <string.h>
 #include <stdlib.h>
+#include <wchar.h>
 
 using namespace nge::video::D2::entity::text;
 
@@ -74,11 +75,11 @@ Pen::~Pen()
   
 }
 
-void Pen::write(char *str, Font *font)
+void Pen::write(wchar_t *str, Font *font)
 {
-  uint32_t i, len = strlen(str);
+  uint32_t i, len = wcslen(str);
 
-  texture_font_load_glyphs(font->_font, (wchar_t *) str);
+  texture_font_load_glyphs(font->_font, str);
 
   for(i = 0; i < len; i++) {
     texture_glyph_t *glyph = texture_font_get_glyph(font->_font, str[i]);
@@ -92,7 +93,7 @@ void Pen::write(char *str, Font *font)
       }
       else;
 
-      printf("caractère '%c': %f %f %f %f\n", str[i], (double) glyph->s0, (double) glyph->s1, (double) glyph->t0, (double) glyph->t1);
+      //printf("caractère '%c': %f %f %f %f\n", str[i], (double) glyph->s0, (double) glyph->s1, (double) glyph->t0, (double) glyph->t1);
 
       // utiliser le buffer de glyph
 
@@ -135,13 +136,13 @@ void Pen::write(char *str, Font *font)
         colors[4 * l + 3] = _a;
       }
 
-      printf("%c:\ntexcoords: ", str[i]);
+      /*printf("%c:\ntexcoords: ", str[i]);
       for(int l = 0; l < 8; l++)
         printf("%f ", texcoords[l]);
       printf("\nvertices:");
       for(int l = 0; l < 8; l++)
         printf("%d ", vertices[l]);
-      printf("\n");
+      printf("\n");*/
       _text->_chars.push_back(tc);
 
       _x += glyph->advance_x;
