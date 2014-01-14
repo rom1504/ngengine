@@ -10,17 +10,7 @@ PixelBuffer::PixelBuffer(Uint8 nbpp, Uint32 width, Uint32 height)
   _width = width;
   _height = height;
 
-  _rw = 2;
-
-  while(_rw < _width)
-    _rw *= 2;
-
-  _rh = 2;
-
-  while(_rh < _height)
-    _rh *= 2;
-
-  _content = (Uint8 *) malloc(nbpp * _rw * _rh);
+  _content = (Uint8 *) malloc(nbpp * _width * _height);
 }
 
 PixelBuffer::~PixelBuffer()
@@ -40,8 +30,8 @@ Uint8 *PixelBuffer::getPixelAddr(Uint32 x, Uint32 y)
     return nullptr;
   else;
 
-	nb = (_rw * _rh);
-	nb -= ((y + 1) * _rw);
+	nb = (_width * _height);
+	nb -= ((y + 1) * _width);
 	nb += x;
 	nb *= _nbpp;
 
@@ -67,15 +57,5 @@ Uint32 PixelBuffer::getWidth()
 Uint32 PixelBuffer::getHeight()
 {
   return _height;
-}
-
-Uint32 PixelBuffer::getRealWidth()
-{
-  return _rw;
-}
-
-Uint32 PixelBuffer::getRealHeight()
-{
-  return _rh;
 }
 

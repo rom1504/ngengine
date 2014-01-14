@@ -23,14 +23,11 @@ namespace nge {
 
       Uint32 getWidth();
       Uint32 getHeight();
-      Uint32 getRealWidth();
-      Uint32 getRealHeight();
 
     private:
   
       Uint8 *_content;
       Uint32 _width, _height;
-      Uint32 _rw, _rh; // real width and real height
       Uint8 _nbpp; // nb bytes per pixel: 3 (RGB) or 4 (RGBA)
   };
 

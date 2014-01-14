@@ -35,16 +35,14 @@ void Texture::updateInGC()
 		_nbpp = _pxBuf->getNbBytesPerPixel();
 		_width = _pxBuf->getWidth();
 		_height = _pxBuf->getHeight();
-		_rw = _pxBuf->getRealWidth();
-		_rh = _pxBuf->getRealHeight();
 
 		this->bind();
 
 		glTexImage2D(GL_TEXTURE_2D,
 						 0,   // mipmap
 						 _nbpp,   // nb couleurs
-						 _rw,   // width
-						 _rh,   // height
+						 _width,   // width
+						 _height,   // height
 						 0,   // largeur du bord
 						 ((_nbpp == 3) ? GL_RGB : GL_RGBA),
 						 GL_UNSIGNED_BYTE,
