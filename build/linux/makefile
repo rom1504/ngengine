@@ -2,13 +2,18 @@
 rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
 
 # Sources
-OBJ=$(call rwildcard, ../../src/, *.o) $(call rwildcard, ../../examples/, *.o)
-DEP=$(call rwildcard, ../../src/, *.d) $(call rwildcard, ../../examples/, *.d)
+OBJ=$(call rwildcard, ../../src/, *.o) \
+$(call rwildcard, ../../examples/, *.o) \
+$(call rwildcard, ../../tests/, *.o)
+
+DEP=$(call rwildcard, ../../src/, *.d) \
+$(call rwildcard, ../../examples/, *.d) \
+$(call rwildcard, ../../tests/, *.d)
 
 
 all: lib examples
 
-.PHONY: lib examples clean mrproper
+.PHONY: lib examples tests clean mrproper
 
 clean: 
 	rm -f $(OBJ)
@@ -22,4 +27,7 @@ lib:
 
 examples:
 	cd examples && $(MAKE)
+
+tests:
+	cd tests && $(MAKE)
 

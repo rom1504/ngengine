@@ -10,4 +10,11 @@ install:
   - sudo ln -s /usr/bin/g++-4.8 /usr/bin/g++
 
 script:
+# Building NGEngine
   - cd build/linux && make
+# Building the tests
+  - make tests
+# Executing the tests
+  - cd ../../bin
+  - ./tests
+
