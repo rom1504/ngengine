@@ -3,6 +3,7 @@ rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst 
 
 # Sources
 OBJ=$(call rwildcard, ../../src/, *.o) $(call rwildcard, ../../examples/, *.o)
+DEP=$(call rwildcard, ../../src/, *.d) $(call rwildcard, ../../examples/, *.d)
 
 
 all: lib examples
@@ -10,7 +11,8 @@ all: lib examples
 .PHONY: lib examples clean mrproper
 
 clean: 
-	rm $(OBJ)
+	rm -f $(OBJ)
+	rm -f $(DEP)
   
 mrproper: clean
 	rm -rf ../../bin

@@ -13,5 +13,8 @@
 // Collisions
 #include <ngengine/collision/collision.h>
 
+// Network
+#include <ngengine/network/network.h>
+
 #endif
 
