@@ -28,7 +28,7 @@ class GameController {
     // entities
 
     std::vector<BlockEntity *> _blocks;
-    //std::vector<BallEntity *> _balls;
+    std::vector<BallEntity *> _balls;
     PlayerEntity *_player;
     BallEntity *_player_ball;
 };

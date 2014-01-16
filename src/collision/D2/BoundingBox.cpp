@@ -44,8 +44,11 @@ bool BoundingBox::collisionWithoutCallOtherCollisionWithOffset(
   BoundingBox *adb = (BoundingBox *) ad; 
   Sint32 *map = adb->getMap();
 
-  if((_map[0] > map[1]) || (_map[1] < map[0]) ||
-     (_map[2] > map[3]) || (_map[3] < map[2]))
+  if(((_map[0] + offsetSelf[0]) > (map[1]  + offsetAd[0])) || 
+     ((_map[1] + offsetSelf[0]) < (map[0]  + offsetAd[0])) ||
+     ((_map[2] + offsetSelf[1]) > (map[3]  + offsetAd[1])) || 
+     ((_map[3] + offsetSelf[1]) < (map[2]  + offsetAd[1]))
+    )
     ret = 0;
 
   return ret;

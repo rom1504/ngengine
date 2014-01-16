@@ -11,6 +11,15 @@ class BallEntity {
 
     void move(nge::Sint32 dx, nge::Sint32 dy);
 
+    void set(nge::Sint32 dx, nge::Sint32 dy);
+    void move();
+
+    void invert_dx();
+    void invert_dy();
+
+    nge::Sint32 get_dx();
+    nge::Sint32 get_dy();
+
     nge::video::D2::entity::Basic *get_graphic_entity();
     nge::collision::D2::BoundingBox *get_collision_entity();
 

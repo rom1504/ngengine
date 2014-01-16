@@ -25,7 +25,7 @@ PlayerEntity::PlayerEntity()
   *(_graphic_entity->getPosition()) = glm::vec2(300, 560);
 
   _collision_entity = new nge::collision::D2::BoundingBox();
-
+  _collision_entity->set(0, 200, 0, 20);
 }
 
 PlayerEntity::~PlayerEntity()

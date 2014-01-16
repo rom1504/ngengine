@@ -36,6 +36,7 @@ BallEntity::BallEntity(nge::Sint32 x, nge::Sint32 y, nge::Sint32 dx, nge::Sint32
   *(_graphic_entity->getPosition()) = glm::vec2(x, y);
 
   _collision_entity = new nge::collision::D2::BoundingBox();
+  _collision_entity->set(0, 20, 0, 20);
   
 }
 
@@ -47,6 +48,37 @@ BallEntity::~BallEntity()
 void BallEntity::move(nge::Sint32 dx, nge::Sint32 dy)
 {
   (*(_graphic_entity->getPosition())) += glm::vec2(dx, dy);
+}
+
+void BallEntity::set(nge::Sint32 dx, nge::Sint32 dy)
+{
+  _dx = dx;
+  _dy = dy;
+}
+
+void BallEntity::move()
+{
+  (*(_graphic_entity->getPosition())) += glm::vec2(_dx, _dy);
+}
+
+void BallEntity::invert_dx()
+{
+  _dx = - _dx;
+}
+
+void BallEntity::invert_dy()
+{
+  _dy = - _dy;
+}
+
+nge::Sint32 BallEntity::get_dx()
+{
+  return _dx;
+}
+
+nge::Sint32 BallEntity::get_dy()
+{
+  return _dy;
 }
 
 nge::video::D2::entity::Basic *BallEntity::get_graphic_entity()

@@ -33,7 +33,7 @@ BlockEntity::BlockEntity(nge::Sint32 x, nge::Sint32 y, nge::Uint8 r, nge::Uint8 
   *(_graphic_entity->getPosition()) = glm::vec2(x, y);
 
   _collision_entity = new nge::collision::D2::BoundingBox();
-  
+  _collision_entity->set(0, 80, 0, 30);
 }
 
 BlockEntity::~BlockEntity()

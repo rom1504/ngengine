@@ -23,7 +23,7 @@ GameController::GameController(SDL_Window *window)
   int color = 0;
   nge::Uint8 r, g, b;
 
-  for(int i = 0; i < 9; i++) {
+  for(int i = 0; i < 8; i++) {
     for(int j = 0; j < 11; j++) {
       
       switch(color) {
@@ -44,7 +44,7 @@ GameController::GameController(SDL_Window *window)
       color ++;
       color = color % 3;
 
-      block = new BlockEntity(30 + 80 * i, 20 + 30 * j, r, g, b, 255);
+      block = new BlockEntity(80 + 80 * i, 20 + 30 * j, r, g, b, 255);
 
       _subscene->add(block->get_graphic_entity());
       _blocks.push_back(block);
@@ -69,7 +69,102 @@ void GameController::start()
 
   do {
     done = this->event_loop();
+
+    // deplacements/collisions
+  
+    for(unsigned int i = 0; i < _balls.size(); i++) {
+      if( ((*(_balls[i]->get_graphic_entity()->getPosition()))[0] + _balls[i]->get_dx()) < 0)
+        _balls[i]->invert_dx();
+
+      if( ((*(_balls[i]->get_graphic_entity()->getPosition()))[0] + _balls[i]->get_dx() + 20) > 800)
+        _balls[i]->invert_dx();
+
+
+      if( ((*(_balls[i]->get_graphic_entity()->getPosition()))[1] + _balls[i]->get_dy()) < 0)
+        _balls[i]->invert_dy();
+    }
+
+    // 1) test with blocks
+    for(unsigned int i = 0; i < _balls.size(); i++) {
+      for(unsigned int j = 0; j < _blocks.size(); j++) {
+        if(_balls[i]->get_collision_entity()->collisionWithOffset(
+             _blocks[j]->get_collision_entity(), 
+             *(_balls[i]->get_graphic_entity()->getPosition()) + 
+               glm::vec2(_balls[i]->get_dx(), _balls[i]->get_dy()),
+             *(_blocks[j]->get_graphic_entity()->getPosition())
+           )
+        ) {
+
+          if(_balls[i]->get_collision_entity()->collisionWithOffset(
+               _blocks[j]->get_collision_entity(), 
+               *(_balls[i]->get_graphic_entity()->getPosition()) + 
+                 glm::vec2(_balls[i]->get_dx(), 0.f),
+               *(_blocks[j]->get_graphic_entity()->getPosition())
+             )
+          ) {
+            _balls[i]->invert_dx();
+          }
+
+          if(_balls[i]->get_collision_entity()->collisionWithOffset(
+               _blocks[j]->get_collision_entity(), 
+               *(_balls[i]->get_graphic_entity()->getPosition()) + 
+                 glm::vec2(0.f, _balls[i]->get_dy()),
+               *(_blocks[j]->get_graphic_entity()->getPosition())
+             )
+          ) {
+            _balls[i]->invert_dy();
+          }
+        }
+      }
+    }
+
+    // test with player
+    for(unsigned int i = 0; i < _balls.size(); i++) {
+      if(_balls[i]->get_collision_entity()->collisionWithOffset(
+           _player->get_collision_entity(), 
+           *(_balls[i]->get_graphic_entity()->getPosition()) + 
+             glm::vec2(_balls[i]->get_dx(), _balls[i]->get_dy()),
+           *(_player->get_graphic_entity()->getPosition())
+         )
+      ) {
+/*
+        if(_balls[i]->get_collision_entity()->collisionWithOffset(
+             _player->get_collision_entity(), 
+             *(_balls[i]->get_graphic_entity()->getPosition()) + 
+               glm::vec2(_balls[i]->get_dx(), 0.f),
+             *(_player->get_graphic_entity()->getPosition())
+           )
+        ) {
+          _balls[i]->invert_dx();
+        }*/
+
+        if(_balls[i]->get_collision_entity()->collisionWithOffset(
+             _player->get_collision_entity(), 
+             *(_balls[i]->get_graphic_entity()->getPosition()) + 
+               glm::vec2(0.f, _balls[i]->get_dy()),
+             *(_player->get_graphic_entity()->getPosition())
+           )
+        ) {
+          double angle;
+
+          angle = acos(
+            ((*(_balls[i]->get_graphic_entity()->getPosition()))[0] - ((*(_player->get_graphic_entity()->getPosition()))[0] + 100.f))
+             / 120.f
+          );
+
+          _balls[i]->set(
+            8. * cos(angle), -8. * sin(angle)
+          );
+        }
+      }
+    }
+
+    for(unsigned int i = 0; i < _balls.size(); i++)
+      _balls[i]->move();
+
+    // display
     this->display();
+
   } while(!done);
 
   return;
@@ -103,6 +198,14 @@ bool GameController::event_loop()
           break;
           case SDLK_RIGHT:
             right = 1;
+          break;
+          case SDLK_SPACE:
+            if(_player_ball) {
+
+              _player_ball->set(0, -4);
+              _balls.push_back(_player_ball);
+              _player_ball = nullptr;
+            }
           break;
           default:
           break;
