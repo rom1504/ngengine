@@ -3,25 +3,13 @@
 [![Build Status](https://travis-ci.org/nativgames/ngengine.png?branch=master)](https://travis-ci.org/nativgames/ngengine)
 
 NGEngine by Nativ' Games is a C++ 2D/3D Game Engine, with the minimum of dependencies:
-- OpenGL: A low-level graphics library
-- GLU
+- OpenGL 3.1: A low-level graphics library
 - Glew
 - Glm (mathematic library designed for OpenGL programs)
 
 The examples use the following libraries:
-- SDL 1.2: create the window in which the OpenGL Context is displayed
-- SDL_image_1.2: support for png/jpeg images
-
-Currently, OpenGL 2.1 is used, without shader support.
-
-An update to SDL 2.0 should be done in the future (and to OpenGL 3.1 or 3.2).
-
-#Library Structure
-
-- Collision: the collision shapes (3D BoundingBox for instant, in the future 2D/3D AABB, 2D (/3D ?) OBB etc...).
-- Event
-- Utils
-- Video
+- SDL 2.0: create the window in which the OpenGL context is displayed
+- SDL_image_2.0: support for png/jpeg images
 
 #Folder Structure
 
@@ -32,6 +20,16 @@ An update to SDL 2.0 should be done in the future (and to OpenGL 3.1 or 3.2).
 - /bin: contains the ngengine library and the examples executables
 - /examples: contains the sources of the examples
 - /resources: contains the resources for the examples
+- /tests: contains the unit tests
+- /.travis.yml: configuration of the compilation to provide continous-integration (cloning this project on a VM, installing the dependencies, compiling the project, compiling the tests, launching the tests.
+
+#Library Structure
+
+- Collision: the collision shapes (3D BoundingBox for instant, in the future 2D/3D AABB, 2D (/3D ?) OBB etc...).
+- Event
+- Utils
+- Video
+- Network: contains classes to create TCP/IP clients and servers (Linux for instant).
 
 #Compilation
 
@@ -45,6 +43,8 @@ An update to SDL 2.0 should be done in the future (and to OpenGL 3.1 or 3.2).
 
 `make clean` and `make mrproper` are available in the build/linux makefile.
 
+If you don't succeed to compile, read .travis.yml it details how to install the dependencies.
+
 #Conventions
 
 - Each namespace is in lower case letters.
@@ -53,9 +53,8 @@ An update to SDL 2.0 should be done in the future (and to OpenGL 3.1 or 3.2).
 
 #Warnings
 
-- Lots of comments are in French, others are in English. They will definitly be re-written in English soon.
+- Lots of comments are in French, others are in English: I'm rewriting them in English.
 - The 06_CameraQuat presents a bug: the rotation should be around the left\_axis and the normal\_axis, and when you do rounds with the camera, it turns over the target\_axis too... TO FIX
-- Moving to OpenGL 3.X
 
 #Licence
 
