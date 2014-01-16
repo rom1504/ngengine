@@ -114,6 +114,10 @@ void GameController::start()
           ) {
             _balls[i]->invert_dy();
           }
+
+          _subscene->remove(_blocks[j]->get_graphic_entity());
+          delete _blocks[j];
+          _blocks.erase(_blocks.begin() + j);
         }
       }
     }
