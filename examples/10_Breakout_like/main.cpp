@@ -102,8 +102,13 @@ int main(int argc, char **argv)
   glClearColor(0., 0., 0., 1.);
 
   GameController *game = new GameController(fenetre);
-  
-  game->start();
+
+  int ret;  
+
+  do {
+    ret = game->start();
+  } while(ret);
+
   delete game;
   delete shader_tex;
   delete shader_color;

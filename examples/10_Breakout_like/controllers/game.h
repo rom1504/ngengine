@@ -13,7 +13,7 @@ class GameController {
     GameController(SDL_Window *window);
     ~GameController();
 
-    void start();
+    int start();
 
   private:
 

@@ -14,10 +14,6 @@ GameController::GameController(SDL_Window *window)
   _player = new PlayerEntity;
   _subscene->add(_player->get_graphic_entity());
 
-  // creating the first ball
-  _player_ball = new BallEntity(390, 540, 0, 0);
-  _subscene->add(_player_ball->get_graphic_entity());
-
   // creating the blocks
   BlockEntity *block;
 
@@ -66,9 +62,14 @@ GameController::~GameController()
   //delete _scene;
 }
 
-void GameController::start()
+int GameController::start()
 {
   bool done;
+  int ret = 0;
+
+  // creating the first ball
+  _player_ball = new BallEntity((*(_player->get_graphic_entity()->getPosition()))[0] + 100, 540, 0, 0);
+  _subscene->add(_player_ball->get_graphic_entity());
 
   do {
     done = this->event_loop();
@@ -82,6 +83,14 @@ void GameController::start()
       if( ((*(_balls[i]->get_graphic_entity()->getPosition()))[0] + _balls[i]->get_dx() + 20) > 800)
         _balls[i]->invert_dx();
 
+      if( ((*(_balls[i]->get_graphic_entity()->getPosition()))[1] + _balls[i]->get_dy() + 20) > 600) {
+        ret = 1; // restart
+        done = 1;
+
+        _subscene->remove(_balls[i]->get_graphic_entity());
+        delete _balls[i];
+        _balls.erase(_balls.begin() + i);
+      }
 
       if( ((*(_balls[i]->get_graphic_entity()->getPosition()))[1] + _balls[i]->get_dy()) < 0)
         _balls[i]->invert_dy();
@@ -172,9 +181,9 @@ void GameController::start()
     // display
     this->display();
 
-  } while(!done);
+  } while(!done);  
 
-  return;
+  return ret;
 }
 
 
