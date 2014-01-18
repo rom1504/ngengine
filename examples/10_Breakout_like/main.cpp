@@ -10,6 +10,10 @@ nge::video::shader::Shader *shader_tex;
 
 int main(int argc, char **argv)
 {	
+  std::string path(argv[0]);
+  std::string prefix=path.substr(0, path.find_last_of('/'));
+  chdir(prefix.c_str());
+  
   // The window
 	
   SDL_Window* fenetre(0);
