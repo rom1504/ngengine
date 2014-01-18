@@ -21,6 +21,7 @@ class GameController {
     void display();
 
     SDL_Window *_window;
+    nge::event::Event _events;
 
     //nge::scene::Scene *_scene; // 1 scene containing 1 subscene ... no use for instant
     nge::scene::SubScene *_subscene; // 1 subscene only

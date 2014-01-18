@@ -120,7 +120,8 @@ namespace nge {
 #define EC_EKM_KPReturn 67
 #define EC_EKM_Return 68
 #define EC_EKM_Backspace 69
-#define EC_EKM_Undefined 70
+#define EC_EKM_Space 70
+#define EC_EKM_Undefined 71
 /*#define EC_EKM_
 #define EC_EKM_
 #define EC_EKM_
@@ -131,7 +132,7 @@ d'autres à venir genre F1 F2 F3 mais ce ne sera pas utilisable sous Mac. (même
 		struct EventKeyboardMap {
 			
 			bool states[2]; // Num lock ? Majuscules ? etc...
-			bool key[71]; // L'état des touches a b c d e f Maj ArrayUp etc..
+			bool key[72]; // L'état des touches a b c d e f Maj ArrayUp etc..
 			//EC::Char keyUnicode[42]; // la correspondance unicode des touches pour les lettres et les numéros
 			//A mettre + tard pour gérer le japonais par exemple, ou même un clavier qwerty
 	

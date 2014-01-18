@@ -1,5 +1,6 @@
 #include <10_Breakout_like/controllers/game.h>
 #include <10_Breakout_like/shaders.h>
+#include <SDL2/NGE_SDL.h>
 
 GameController::GameController(SDL_Window *window)
 {
@@ -51,6 +52,8 @@ GameController::GameController(SDL_Window *window)
       
     }
   }
+
+  NGE_SDL_Event_Init(&_events);
 }
 
 GameController::~GameController()
@@ -178,62 +181,50 @@ void GameController::start()
 bool GameController::event_loop()
 {
   bool done = false;
-  SDL_Event event;
+  //SDL_Event event;
   
   static int left = 0;
   static int right = 0;
-  // Gestion des évènements
-  while(SDL_PollEvent(&event)) {
 
-    switch(event.type) {
+  // events
+  while(NGE_SDL_Event_Get(&_events)) {
+
+    switch(_events.type) {
       
-      case SDL_QUIT:
-        done = 1;
-        break;
-
-      case SDL_KEYDOWN:
-        switch (event.key.keysym.sym) {
-          case SDLK_ESCAPE:
-          case SDLK_q:
-            done = 1;
-          break;
-          case SDLK_LEFT:
-            left = 1;
-          break;
-          case SDLK_RIGHT:
-            right = 1;
-          break;
-          case SDLK_SPACE:
-            if(_player_ball) {
-
-              _player_ball->set(0, -4);
-              _balls.push_back(_player_ball);
-              _player_ball = nullptr;
-            }
-          break;
-          default:
-          break;
-        }
-        break;
-      case SDL_KEYUP:
-        switch (event.key.keysym.sym) {
-          case SDLK_LEFT:
-            left = 0;
-          break;
-          case SDLK_RIGHT:
-            right = 0;
-          break;
-          default: 
-          break;
-        }
+      case EC_Event_Window:
+        if(_events.change.window.id == EC_EW_Close)
+          done = 1;
         break;
       default:
         break;
       }
+
+      if(_events.map.keyboard.key[EC_EKM_Escape])
+        done = 1;
+
+      if(_events.map.keyboard.key[EC_EKM_ArrowLeft])
+        left = 1;
+      else
+        left = 0;
+
+      if(_events.map.keyboard.key[EC_EKM_ArrowRight])
+        right = 1;
+      else
+        right = 0;
+
+      if(_events.map.keyboard.key[EC_EKM_Space]) {
+        if(_player_ball) {
+          _player_ball->set(0, -4);
+          _balls.push_back(_player_ball);
+          _player_ball = nullptr;
+        }
+        else;
+      }
+      else;
     }
 
-  if(event.window.event == SDL_WINDOWEVENT_CLOSE)
-    done = true;
+ /* if(event.window.event == SDL_WINDOWEVENT_CLOSE)
+    done = true;*/
 
   if(left) {
     _player->move(-15);

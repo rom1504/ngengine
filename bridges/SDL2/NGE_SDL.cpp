@@ -75,10 +75,10 @@ Texture *NGE_SDL_Texture_Load(const char *path)
 	
 	return tex;
 }
-/*
+
 static void NGE_SDL_Event_LoadStates(nge::event::Event *event)
 {
-	SDLMod mod;
+	SDL_Keymod mod;
 
 	mod = SDL_GetModState();
 
@@ -111,15 +111,15 @@ void NGE_SDL_Event_Init(nge::event::Event *event)
 		// il lui suffit de lacher la touche et de réappuyer.	
 	}
 	else;
-}*/
+}
 
 /*
 	La fonction marrante: un switch immonde.
 	Une bonne partie écrite à la main, sauf pour SDLK_a -> SDLK_z et SDLK_0 -> SDLK_9 où j'ai fait 1 script php avec 1 boucle et c'était plié (commande : "php script.php > truc.c" exécute le script php et met le résultat dans truc.c)
 	C'est une nouvelle bidouille pour BIDOUILLE :P
 */
-/*
-static nge::Uint8 Event_ConvertKey(SDLKey key)
+
+static nge::Uint8 Event_ConvertKey(SDL_Keycode key)
 {
 	nge::Uint8 r = EC_EKM_Undefined;
 	
@@ -143,7 +143,7 @@ static nge::Uint8 Event_ConvertKey(SDLKey key)
 		case SDLK_RIGHT:
 				r = EC_EKM_ArrowRight;
 			break;
-		case SDLK_NUMLOCK:
+		case SDLK_NUMLOCKCLEAR:
 				r = EC_EKM_Num;
 			break;
 		case SDLK_CAPSLOCK:
@@ -170,12 +170,12 @@ static nge::Uint8 Event_ConvertKey(SDLKey key)
 		case SDLK_RALT:
 				r = EC_EKM_RAlt;
 			break;
-		case SDLK_LMETA:
+		/*case SDLK_LMETA:
 				r = EC_EKM_LMeta;
 			break;
 		case SDLK_RMETA:
 				r = EC_EKM_RMeta;
-			break;
+			break;*/
 		case SDLK_0:
 				r = EC_EKM_0;
 			break;
@@ -284,34 +284,34 @@ static nge::Uint8 Event_ConvertKey(SDLKey key)
 		case SDLK_z:
 				r = EC_EKM_z;
 			break;
-		case SDLK_KP0:
+		case SDLK_KP_0:
 				r = EC_EKM_KP0;
 			break;
-		case SDLK_KP1:
+		case SDLK_KP_1:
 				r = EC_EKM_KP1;
 			break;
-		case SDLK_KP2:
+		case SDLK_KP_2:
 				r = EC_EKM_KP2;
 			break;
-		case SDLK_KP3:
+		case SDLK_KP_3:
 				r = EC_EKM_KP3;
 			break;
-		case SDLK_KP4:
+		case SDLK_KP_4:
 				r = EC_EKM_KP4;
 			break;
-		case SDLK_KP5:
+		case SDLK_KP_5:
 				r = EC_EKM_KP5;
 			break;
-		case SDLK_KP6:
+		case SDLK_KP_6:
 				r = EC_EKM_KP6;
 			break;
-		case SDLK_KP7:
+		case SDLK_KP_7:
 				r = EC_EKM_KP7;
 			break;
-		case SDLK_KP8:
+		case SDLK_KP_8:
 				r = EC_EKM_KP8;
 			break;
-		case SDLK_KP9:
+		case SDLK_KP_9:
 				r = EC_EKM_KP9;
 			break;
 		case SDLK_KP_DIVIDE:
@@ -335,6 +335,9 @@ static nge::Uint8 Event_ConvertKey(SDLKey key)
 		case SDLK_BACKSPACE:
 				r = EC_EKM_Backspace;
 			break;
+		case SDLK_SPACE:
+				r = EC_EKM_Space;
+			break;
 		default:
 			break;
 	}
@@ -357,9 +360,13 @@ bool NGE_SDL_Event_Get(nge::event::Event *event)
 						event->type = EC_Event_Window;
 						event->change.window.id = EC_EW_Close;
 					break;
-				case SDL_ACTIVEEVENT:
+				case SDL_WINDOWEVENT://SDL_ACTIVEEVENT:
 						event->type = EC_Event_Window;
-						state = SDL_GetAppState();
+            if(sdlevent.window.event == SDL_WINDOWEVENT_CLOSE) {
+              event->change.window.id = EC_EW_Close;
+            }
+            else event->change.window.id = EC_EW_Close + 1;
+						/*state = SDL_GetAppState();
 						
 						if((state & SDL_APPACTIVE) && (state & SDL_APPMOUSEFOCUS) && (state & SDL_APPINPUTFOCUS))
 						{
@@ -380,7 +387,7 @@ bool NGE_SDL_Event_Get(nge::event::Event *event)
 							}
 							else
 								ret = false;
-						}
+						}*/
 						
 					break;
 				case SDL_MOUSEBUTTONDOWN:
@@ -463,7 +470,7 @@ bool NGE_SDL_Event_Get(nge::event::Event *event)
 	else;
 	
 	return ret;
-}*/
+}
 
 nge::Uint32 NGE_SDL_GetTime()
 {

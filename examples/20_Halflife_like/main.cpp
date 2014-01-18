@@ -3,7 +3,7 @@
 #include <SDL2/NGE_SDL.h>
 #include <iostream>
 #include <ngengine/ngengine.h>
-#include <10_Breakout_like/controllers/game.h>
+#include <20_Halflife_like/controllers/game.h>
 
 nge::video::shader::Shader *shader_color;
 nge::video::shader::Shader *shader_tex;
@@ -11,7 +11,6 @@ nge::video::shader::Shader *shader_tex;
 int main(int argc, char **argv)
 {	
   // The window
-	
   SDL_Window* fenetre(0);
   SDL_GLContext contexteOpenGL(0);
 		
@@ -104,6 +103,7 @@ int main(int argc, char **argv)
   GameController *game = new GameController(fenetre);
   
   game->start();
+
   delete game;
   delete shader_tex;
   delete shader_color;

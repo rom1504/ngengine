@@ -59,3 +59,4 @@ If you don't succeed to compile, read .travis.yml it details how to install the 
 #Licence
 
 MIT License: see License.md
+
